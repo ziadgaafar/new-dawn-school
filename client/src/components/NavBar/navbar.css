@@ -1,0 +1,38 @@
+
+
+.logo-div{
+  height: 100px;
+}
+.logo{
+  width: 100px;
+  height: 100px;
+ 
+}
+.logo-text{
+   font-size: 35px;
+   font-weight: bolder;
+   position: relative;
+   top: 15px;
+}
+
+
+@media only screen and (max-width: 992px)  {
+  .burger{
+    position: relative;
+    left: 700px;
+    }
+}
+@media only screen and (max-width: 768px)  {
+  .burger{
+    position: relative;
+    left: 500px;
+    }
+}
+@media only screen and (max-width: 567px)  {
+  .burger{
+    position: relative;
+    left: 400px;
+   
+    }
+}
+
