@@ -206,33 +206,42 @@
 }
 
 @media only screen and (max-width: 992px) {
-  .welc-container {
+  .welc-container{ 
     font-size: 20px;
     height: 130px;
-  }
-  .about-us {
+}
+.about-us{ 
     font-size: 25px;
-  }
-  .info-cards {
+}
+.info-cards{
+ 
     height: 1000px;
-  }
-  .card-info-content {
-    float: none;
-    width: 100%;
-    height: 400px;
-    padding: 40px;
-  }
-  .card-info-content2 h1 {
+}
+.card-info-content{
+   float: none;
+   width: 100%;
+   height: 400px;
+   padding: 40px;
+ 
+}
+.card-info-content h1{
     font-size: 20px;
-  }
-  .card-info-content2 p {
+}
+.card-info-content p{ 
     font-size: 15px;
-  }
-  .info-img {
+
+}
+
+.card-info-content2 p{
+    font-size: 12px;
+}
+.info-img{
     float: none;
     width: 100%;
     height: 600px;
-  }
+    
+
+}
 }
 
 @media only screen and (max-width: 892px) {
