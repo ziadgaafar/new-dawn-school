@@ -1,0 +1,48 @@
+.parents-photo{
+    background-size: cover;
+    background-attachment: fixed;
+    width: 100%;
+    height: 400px;
+}
+.header{
+    margin-top: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+.content{
+   width: 100%;
+   margin: 10%;
+   padding: 20px;
+  
+}
+.parents-card{
+    width: 70%;
+    margin-bottom:40px ;
+    margin-left: 20%;
+    padding:40px;
+    height: 170px;
+    background-color: #CECECE;
+    border-radius: 40px 0px;
+}
+
+.h2{
+    font-weight: bold;
+}
+span{
+    font-weight: bold;
+}
+
+@media only screen and (max-width: 530px) {  
+    .header{  
+        font-size: 30px;
+    }
+   
+}
+@media only screen and (max-width: 420px) {  
+    .header{  
+        font-size: 20px;
+    }
+  .parent-card{
+      width: 100%;
+  }
+}

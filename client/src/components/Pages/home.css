@@ -50,10 +50,7 @@
 .cards {
   margin-top: 100px;
 }
-.all-cards h1 {
-  color: white;
-  font-weight: bolder;
-}
+
 .all-cards {
   margin: 30px;
   margin-left: 90px;
@@ -67,9 +64,12 @@
   left: -12px;
 }
 .card-h {
+  color: white;
+  font-weight: bolder;
   position: relative;
   top: 200px;
-  left: 80px;
+  left: 20%;
+
 }
 .card-p {
   display: none;
@@ -188,28 +188,6 @@
   background-color: #d3905d;
 }
 
-@media only screen and (max-width: 1350px) {
-  .card-info-content h1 {
-    font-size: 30px;
-  }
-  .card-info-content p {
-    font-size: 20px;
-  }
-}
-
-@media only screen and (max-width: 1200px) {
-  .about-us {
-    font-size: 30px;
-    text-indent: 200px;
-    margin-left: 80px;
-  }
-}
-
-@media only screen and (max-width: 992px) {
-  .welc-container{ 
-    font-size: 20px;
-    height: 130px;
-}
 .about-us{ 
     font-size: 25px;
 }
@@ -242,6 +220,28 @@
     
 
 }
+
+@media only screen and (max-width: 1350px) {
+  .card-info-content h1 {
+    font-size: 30px;
+  }
+  .card-info-content p {
+    font-size: 20px;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .about-us {
+    font-size: 30px;
+    text-indent: 200px;
+    margin-left: 80px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .welc-container{ 
+    font-size: 20px;
+    height: 130px;
 }
 
 @media only screen and (max-width: 892px) {
@@ -295,4 +295,5 @@
     text-indent: 150px;
     margin-left: 20px;
   }
+}
 }

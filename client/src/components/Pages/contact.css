@@ -1,0 +1,54 @@
+.contact-photo{
+    background-size: cover;
+    height: 400px;
+}
+.header{
+    margin-top: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+.contact-card{
+    width: 60%;
+    height: 220px;
+    margin-bottom:40px ;
+    margin-left: 20%;
+    background-color: #CECECE;
+    border-radius: 40px 0px;
+}
+.contact-card-content{
+    padding: 20px;
+}
+.contact-card-content hr{ 
+   width: 70%;
+}
+
+.contact-form{
+    margin-left: 10%;
+
+}
+
+
+.submit-but{
+    width: 150px;
+    padding: 10px;
+    float: right;
+    border: 1px black ;
+    border-radius:30px;
+    background-color: #CECECE;
+}
+.submit-but:hover{ 
+    background-color: #e9e9e9;
+}
+
+
+@media only screen and (max-width: 530px) {  
+    .header{  
+        font-size: 30px;
+    }
+   
+}
+@media only screen and (max-width: 420px) {  
+    .header{  
+        font-size: 20px;
+    }
+}

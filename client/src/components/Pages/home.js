@@ -68,7 +68,7 @@ const Home = () => {
 
         <div className="all-cards card-3 ">
           <div className="card-content">
-            <h1 className="card-h">HIGH SCHOOL</h1>
+            <h1 className="card-h ">HIGH SCHOOL</h1>
             <p className="card-p">
               Grades 9-12 Here at new dawn Academy we envision every student
               becoming a world -class scientist, technologist, engineer or
