@@ -3,19 +3,23 @@
 }
 
 .logo-div{
-  height: 100px;
-  width: 100%;
+  display: flex;
 }
+
 .logo{
   width: 100px;
   height: 100px;
- 
 }
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  
+}
+
 .logo-text{
    font-size: 35px;
-   font-weight: bolder;
-   position: relative;
-   top: 15px;
+   font-weight: bold;
 }
 
 
