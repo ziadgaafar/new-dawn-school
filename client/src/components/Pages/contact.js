@@ -1,7 +1,7 @@
 import React from "react";
 import ph from "../../images/contact.jpg";
 import "./contact.css";
-import { Form, Row, Col, Button } from "react-bootstrap";
+import { Form, Row } from "react-bootstrap";
 
 const Contact = () => {
   return (

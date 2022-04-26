@@ -13,8 +13,8 @@ import Pricing from './components/Pages/pricing';
 import About from './components/Pages/about';
 import Contact from './components/Pages/contact';
 import Footer from './components/footer';
-
-
+import Apply from "./components/Pages/apply";
+import Form from "./components/Pages/form";
 
 import './App.css';
 
@@ -35,6 +35,8 @@ function App() {
         <Route path='/AdmissionsInfo' element={<AdmissionsInfo/>} />
         <Route path='/about' element={<About/>} />
         <Route path='/contact' element={<Contact/>} />
+        <Route path='/apply' element={<Apply/>} />
+        <Route path='/form' element={<Form/>} />
       </Routes>
       <Footer/>
     </BrowserRouter>

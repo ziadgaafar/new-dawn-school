@@ -1,0 +1,36 @@
+.apply-photo{
+    object-fit: cover;
+    object-position: top ;
+    height: 400px;
+}
+.apply-header{
+   text-align: center;
+   margin-top: -150px;
+   color: white;
+   font-weight: bold;
+}
+.apply-header h1{
+    font-weight: bold;
+}
+
+.apply-body{
+    margin: 150px;
+    
+}
+.apply-h{
+    font-weight: bold;
+}
+.apply-p{
+    margin-bottom: 10%;
+}
+.apply-body-photo{
+  height: 400px;
+ 
+}
+
+@media only screen and (max-width: 420px) {  
+    .apply-h{
+      font-size: 30px;
+    }
+
+}

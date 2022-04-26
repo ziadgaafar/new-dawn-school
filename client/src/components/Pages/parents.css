@@ -1,6 +1,6 @@
 .parents-photo{
-    background-size: cover;
-    background-attachment: fixed;
+    object-fit: cover;
+    object-position: top ;
     width: 100%;
     height: 400px;
 }

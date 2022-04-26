@@ -4,6 +4,8 @@ import ph1 from "../../images/home.jpg";
 import ph2 from "../../images/info-card1.jpg";
 import ph3 from "../../images/info-card2.jpg";
 
+
+import { Link } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import { GiEarthAfricaEurope } from "react-icons/gi";
 import { FaUserGraduate } from "react-icons/fa";
@@ -20,7 +22,7 @@ const Home = () => {
         <h1 className="home-header ">
           No More Crowded Classes No More Heavy Bags
         </h1>
-        <button className="home-button ">APPLY</button>
+       <Link  as={Link} to={"/Apply"}> <button className="home-button " >APPLY</button> </Link> 
       </div>
       {/*welcome container */}
       <div className="container ">
