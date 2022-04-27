@@ -5,3 +5,11 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
+
+.nav-item .dropdown-menu {
+    background: #000000;
+  }
+  
+.nav-item .dropdown-item {
+  color: #ffffff;
+}

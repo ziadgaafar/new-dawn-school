@@ -1,18 +1,26 @@
-.home-photo {
-  height: 900px;
-  background-size: cover;
+.home-container {
+  overflow: hidden;
 }
-.home-header {
+
+.home-bg-container {
   position: relative;
-  top: -400px;
-  left: 10%;
+  height: 900px;
+  background-image: url("../../images/home.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.home-bg-content {
+  position: absolute;
+  top: 30%;
+}
+
+.home-header {
   width: 500px;
   font-weight: bolder;
 }
+
 .home-button {
-  position: relative;
-  top: -370px;
-  left: 20%;
   width: 150px;
   height: 60px;
   font-weight: bolder;
@@ -26,13 +34,9 @@
 }
 .welc-container {
   text-align: center;
-  margin-top: -164px;
   margin-left: 20%;
   background-color: #eeeeee;
-  font-weight: bolder;
-  height: 120px;
-  font-size: 25px;
-  padding: 25px;
+  padding: 16px 0 4px;
 }
 .line {
   width: 15%;
@@ -47,44 +51,50 @@
   text-align: center;
 }
 
-.cards {
-  margin-top: 100px;
+.all-cards {
+  height: 450px;
+  margin: 12px;
+  position: relative;
 }
 
-.all-cards {
-  margin: 30px;
-  margin-left: 90px;
-  height: 500px;
-  width: 400px;
-}
 .card-content {
-  width: 106.5%;
+  position: absolute;
+  top:0;
+  left: 0;
   height: 100%;
-  position: relative;
-  left: -12px;
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden
 }
+
+.card-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position:absolute;
+  top: 35%;
+  transition: all 0.3s ease-in-out;
+}
+
 .card-h {
   color: white;
-  font-weight: bolder;
-  position: relative;
-  top: 200px;
-  left: 20%;
-
+  font-weight: bold;
+  font-size: 2rem;
+  transition: all 0.3s ease-in-out;
 }
 .card-p {
-  display: none;
+  opacity: 0;
   color: white;
   text-align: center;
-  position: relative;
-  top: 200px;
+  padding: 6px;
+  transition: all 0.3s ease-in-out;
 }
 .card-line {
-  display: none;
+  opacity: 0;
   color: #ddb444;
-  position: relative;
-  top: 200px;
-  left: 10%;
   width: 70%;
+  transition: all 0.3s ease-in-out;
 }
 
 .card-content:hover {
@@ -94,10 +104,10 @@
   color: #ddb444;
 }
 .all-cards:hover .card-p {
-  display: block;
+  opacity: 1;
 }
 .all-cards:hover .card-line {
-  display: block;
+  opacity: 1;
 }
 
 .card-1 {
@@ -121,10 +131,10 @@
 
 .info {
   color: #692045;
-  margin-top: 100px;
+  margin-top: 48px;
 }
 .info-header {
-  font-weight: bolder;
+  font-weight: bold;
 }
 .icon-card {
   padding: 20px;
@@ -136,6 +146,13 @@
   box-shadow: 2px 4px rgba(170, 165, 165, 0.247);
   border-radius: 50px 0px;
 }
+
+.icon-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .icons {
   color: #692045;
   font-size: 100px;
@@ -143,27 +160,19 @@
 .icons-info {
   font-size: 25px;
 }
-.about-container {
-  margin: 100px;
-}
+
 .about-us {
-  font-weight: bolder;
-  text-indent: 280px;
-  margin-left: 40px;
+  text-align: center
 }
 
 .info-cards {
   background-color: #ebebeb;
   height: 750px;
-  width: 80%;
-  margin-left: 10%;
-  margin-bottom: 150px;
-  border-radius: 60px;
   text-align: center;
+  display: flex;
 }
 .card-info-content {
-  margin-top: 10%;
-  width: 50%;
+  border: 1px solid green;
   float: right;
 }
 .card-info-content h1 {
@@ -173,14 +182,9 @@
   font-size: 25px;
 }
 .info-img {
-  width: 50%;
-  border-radius: 60px;
-  height: 750px;
-  float: left;
 }
 .read-more {
   background-color: #b47a4d;
-  border-radius: 60px;
   padding: 15px;
   border: 1px black;
 }
@@ -233,8 +237,6 @@
 @media only screen and (max-width: 1200px) {
   .about-us {
     font-size: 30px;
-    text-indent: 200px;
-    margin-left: 80px;
   }
 }
 
@@ -242,7 +244,7 @@
   .welc-container{ 
     font-size: 20px;
     height: 130px;
-}
+}}
 
 @media only screen and (max-width: 892px) {
   .about-us {
@@ -250,11 +252,6 @@
   }
 }
 @media only screen and (max-width: 792px) {
-  .about-us {
-    font-size: 20px;
-    text-indent: 150px;
-    margin-left: 70px;
-  }
   .read-more {
     padding: 15px;
   }
@@ -267,33 +264,23 @@
 
 @media only screen and (max-width: 600px) {
   .home-header {
-    position: relative;
-    top: -450px;
     width: 350px;
     font-size: 30px;
   }
-  .home-button {
-    position: relative;
-    top: -430px;
-    left: 15%;
-  }
-  .home-photo {
+  .home-bg-container {
     height: 700px;
+  }
+  .home-bg-content {
+    top: 35%;
   }
 }
 
 @media only screen and (max-width: 576px) {
   .info-header {
-    font-size: 30px;
+    font-size: 25px;
     margin-left: 60px;
-  }
-  .all-cards {
-    margin-left: 50px;
   }
   .about-us {
     font-size: 20px;
-    text-indent: 150px;
-    margin-left: 20px;
   }
-}
 }

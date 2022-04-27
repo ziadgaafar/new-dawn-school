@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown, Dropdown, NavItem } from "react-bootstrap";
 import "./navbar.css";
 
 const navbar = () => {
@@ -10,17 +10,17 @@ const navbar = () => {
       expand="lg"
       variant="dark"
       bg="black"
-      className="main-navbar"
+      className="main-navbar p-0 bg-light"
     >
       <Navbar.Toggle
-        className="burger text-center "
+        className="burger text-center bg-dark"
         aria-controls="responsive-navbar-nav"
       />
       <Navbar.Collapse
         className=" justify-content-end "
         id="responsive-navbar-nav"
       >
-        <Nav className="">
+        <Nav className="nav pl-3">
           <Nav.Link
             className="text-light text-center "
             as={Link}
@@ -37,12 +37,20 @@ const navbar = () => {
             title="Admissions"
             id="collasible-nav-dropdown"
           >
-            <NavDropdown.Item as={Link} to={"/Parents"}>
+            <NavDropdown.Item
+              as={Link}
+              to={"/Parents"}
+              className="text-white dropdown-btn"
+            >
               {" "}
               PROSPECTIVE PARENTS{" "}
             </NavDropdown.Item>
-            <NavDropdown.Item as={Link} to={"/AdmissionsInfo"}>
-              {" "}
+            <NavDropdown.Item
+              as={Link}
+              to={"/AdmissionsInfo"}
+              className="text-white dropdown-btn"
+              style={{ background: "black" }}
+            >
               ADMISSIONS INFO
             </NavDropdown.Item>
           </NavDropdown>
