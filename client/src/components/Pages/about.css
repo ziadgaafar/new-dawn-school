@@ -29,30 +29,32 @@
 .slider-div{
     background-color: #1B1E2C;
     color: white;
+
 }
 
 .slider{
     background-color: white;
     height: 100%;
     width: 100%;
+  
 }
 
 .slider-img-div{
     height: 200px;
-    float: left;
-
+  
+ 
 
 }
 .slider-img{
  width: 100%;
  filter: drop-shadow(20px 0px 20px gray);
  height: 90%;
-
+ border: 1px solid green;
  
 
 }
 .slider-caption{
-    float: right;
+  
 }
 
 

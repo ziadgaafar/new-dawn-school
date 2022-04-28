@@ -116,8 +116,8 @@ const About = () => {
         </div>
 
         <div className="col-lg-5 col-10 p-5 ml-5 w-100">
-          <Carousel className="slider pb-5 " variant="dark">          
-            <Carousel.Item className="row slider-content p-4 ">  
+          <Carousel fade  className="border border-primary  slider pb-5 " variant="dark">          
+            <Carousel.Item className="row d-flex  slider-content p-4 ">  
                            
                 <div className="col-xl-5 col-12 slider-img-div ">
                   <img className="slider-img"  src={first} alt="First slide" />
@@ -133,7 +133,7 @@ const About = () => {
                              
             </Carousel.Item>
            
-            <Carousel.Item className="row slider-content p-4 ">  
+            <Carousel.Item className="row d-flex  slider-content  p-4 ">  
                             
             <div className="col-xl-5 col-12 slider-img-div ">
               <img className="slider-img"  src={secound} alt="secound slide" />
@@ -151,7 +151,7 @@ const About = () => {
                          
             </Carousel.Item>
 
-            <Carousel.Item className="row slider-content p-4">  
+            <Carousel.Item className="row d-flex  slider-content p-4">  
                    
                 <div className="col-xl-5 col-12 slider-img-div ">
                   <img className="slider-img"  src={third} alt="third slide" />
