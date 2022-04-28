@@ -173,8 +173,10 @@ const Home = () => {
             students using itsproduct, according to Mrinal Mohit, the company's
             Chief Operating Officer.
           </p>
-
-          <button className="read-more">Read More</button>
+            <Link as={Link} to={"/Covid"}>
+              {" "}
+              <button className="read-more ">Read More</button>{" "}
+            </Link>        
         </div>
 
         <div>

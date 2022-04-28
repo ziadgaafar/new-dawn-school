@@ -8,7 +8,7 @@ const form = () => {
     <div>
       <img src={ph} alt="ph" className="form-photo w-100" />
       <div className="form-header w-100">
-        <h1 className="font-weight-bold">SPEAK TO AN ADVISOR</h1>
+        <h1 className="font-weight-bold">SIGN UP  </h1>
         <p className="">
           New Dawn School delivers world-class online teaching to students right
           in their own home. <br></br>

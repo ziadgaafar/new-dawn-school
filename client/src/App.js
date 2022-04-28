@@ -15,6 +15,7 @@ import Contact from './components/Pages/contact';
 import Footer from './components/footer';
 import Apply from "./components/Pages/apply";
 import Form from "./components/Pages/form";
+import Covid from "./components/Pages/covid";
 
 import './App.css';
 
@@ -37,6 +38,7 @@ function App() {
         <Route path='/contact' element={<Contact/>} />
         <Route path='/apply' element={<Apply/>} />
         <Route path='/form' element={<Form/>} />
+        <Route path='/covid' element={<Covid/>} />
       </Routes>
       <Footer/>
     </BrowserRouter>
