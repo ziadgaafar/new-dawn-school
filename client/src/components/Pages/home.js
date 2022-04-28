@@ -140,47 +140,54 @@ const Home = () => {
         </Row>
       </Container>
 
-      <div className="info-cards">
-        <div class=" card-info-content">
-          <h1 className="font-weight-bold">What Is School Of New Dawn</h1>
-          <p className="font-weight-normal">
-            We are a network of professionals with passion towards learning,
-            equipped with our philosophy in learning as a whole through
-            delivering education, building character and equipping tomorrow's
-            leaders with the required skills to create a better world through
-            contributing to creating a healthier student with a stable
-            personality...
-          </p>
-        </div>
+      <Container className="info-cards p-0 mt-5">
+        <Row>
+          <Col className="p-0" sm="12" lg="6">
+            <img src={ph2} alt="ph2" className="info-img" />
+          </Col>
+          <Col className="m-auto p-4">
+            <div class="card-info-content">
+              <h1 className="font-weight-bold">What Is School Of New Dawn</h1>
+              <p className="font-weight-normal">
+                We are a network of professionals with passion towards learning,
+                equipped with our philosophy in learning as a whole through
+                delivering education, building character and equipping
+                tomorrow's leaders with the required skills to create a better
+                world through contributing to creating a healthier student with
+                a stable personality...
+              </p>
+            </div>
+          </Col>
+        </Row>
+      </Container>
 
-        <div className="">
-          <img src={ph2} alt="ph2" className="info-img" />
-        </div>
-      </div>
+      <Container className="info-cards p-0 mt-5">
+        <Row>
+          <Col sm="12" lg="6" className="p-0">
+            <img src={ph3} alt="ph3" className="info-img" />
+          </Col>
+          <Col className="m-auto p-4">
+            <div class="card-info-content card-info-content2">
+              <h1 className="font-weight-bold ">
+                The COVID-19 pandemic has changed education forever. This is how
+              </h1>
+              <p className="font-weight-normal ">
+                In response to significant demand, many online learning
+                platforms are offering free access to their services, including
+                platforms like BYJU’S, a Bangalore-based educational technology
+                and online tutoring firm founded in 2011, which is now the
+                world’s most highly valued tech company. Since announcing free
+                live classes on its Think and Learn app, BYJU’s has seen a 200%
+                increase in the number of new students using itsproduct,
+                according to Mrinal Mohit, the company's Chief Operating
+                Officer.
+              </p>
 
-      <div className="info-cards">
-        <div class="card-info-content card-info-content2">
-          <h1 className="font-weight-bold ">
-            The COVID-19 pandemic has changed education forever. This is how
-          </h1>
-          <p className="font-weight-normal ">
-            In response to significant demand, many online learning platforms
-            are offering free access to their services, including platforms like
-            BYJU’S, a Bangalore-based educational technology and online tutoring
-            firm founded in 2011, which is now the world’s most highly valued
-            tech company. Since announcing free live classes on its Think and
-            Learn app, BYJU’s has seen a 200% increase in the number of new
-            students using itsproduct, according to Mrinal Mohit, the company's
-            Chief Operating Officer.
-          </p>
-
-          <button className="read-more">Read More</button>
-        </div>
-
-        <div>
-          <img src={ph3} alt="ph3" className="info-img" />
-        </div>
-      </div>
+              <button className="read-more">Read More</button>
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 };
