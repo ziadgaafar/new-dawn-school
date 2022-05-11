@@ -146,7 +146,7 @@ const Home = () => {
             <img src={ph2} alt="ph2" className="info-img" />
           </Col>
           <Col className="m-auto p-4">
-            <div class="card-info-content">
+            <div className="card-info-content">
               <h1 className="font-weight-bold">What Is School Of New Dawn</h1>
               <p className="font-weight-normal">
                 We are a network of professionals with passion towards learning,
@@ -167,7 +167,7 @@ const Home = () => {
             <img src={ph3} alt="ph3" className="info-img" />
           </Col>
           <Col className="m-auto p-4">
-            <div class="card-info-content card-info-content2">
+            <div className="card-info-content card-info-content2">
               <h1 className="font-weight-bold ">
                 The COVID-19 pandemic has changed education forever. This is how
               </h1>
@@ -184,9 +184,9 @@ const Home = () => {
               </p>
 
               <Link as={Link} to={"/Covid"}>
-              {" "}
-              <button className="read-more ">Read More</button>{" "}
-            </Link>  
+                {" "}
+                <button className="read-more ">Read More</button>{" "}
+              </Link>
             </div>
           </Col>
         </Row>
