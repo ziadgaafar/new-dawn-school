@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import "./about.css";
 
 const Pricing = () => {
+
+
   return (
-    <div>
-      Pricing
+    <div className=''>
+      pricing
     </div>
   )
 }

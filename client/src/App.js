@@ -16,6 +16,7 @@ import Footer from './components/footer';
 import Apply from "./components/Pages/apply";
 import Form from "./components/Pages/form";
 import Covid from "./components/Pages/covid";
+import Login from './components/Pages/login';
 
 import './App.css';
 
@@ -39,6 +40,7 @@ function App() {
         <Route path='/apply' element={<Apply/>} />
         <Route path='/form' element={<Form/>} />
         <Route path='/covid' element={<Covid/>} />
+        <Route path='/login' element={<Login/>} />
       </Routes>
       <Footer/>
     </BrowserRouter>

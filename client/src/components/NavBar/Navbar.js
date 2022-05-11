@@ -24,13 +24,11 @@ const navbar = () => {
           <Nav.Link
             className="text-light text-center "
             as={Link}
-            to={"/student"}
+            to={"/login"}
           >
-            Student
+            LogIn
           </Nav.Link>
-          <Nav.Link className="text-light text-center" as={Link} to={"/staff"}>
-            Staff
-          </Nav.Link>
+        
 
           <NavDropdown
             className="text-light text-center"

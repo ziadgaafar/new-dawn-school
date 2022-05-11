@@ -116,7 +116,7 @@ const About = () => {
         </div>
 
         <div className="col-lg-5 col-10 p-5 ml-5 w-100">
-          <Carousel fade  className="border border-primary  slider pb-5 " variant="dark">          
+          <Carousel fade  className=" slider pb-5 " variant="dark">          
             <Carousel.Item className="row d-flex  slider-content p-4 ">  
                            
                 <div className="col-xl-5 col-12 slider-img-div ">

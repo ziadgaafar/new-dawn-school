@@ -105,7 +105,7 @@ const form = () => {
               />
             </Form.Group>
             <input
-              className="form-but col-4 col-md-2 "
+              className="form-but col-4 col-md-3  col-xl-2"
               type="submit"
               value="SUBMIT"
             />
