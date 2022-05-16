@@ -27,6 +27,7 @@ const Login = () => {
         style={{
           backgroundImage: `url(${bgImage})`,
           backgroundSize: "cover",
+          backgroundPosition: "center",
           minHeight: "100%",
           height: "100%",
         }}
