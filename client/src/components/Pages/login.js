@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Col, Container, Form, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import logo from "../NavBar/logo.png";
 import bgImage from "../../images/university-back.png";
 import person from "../../images/person.png";
@@ -20,7 +21,10 @@ const Login = () => {
         </Row>
       </Container>
       <Container fluid className="bg-black text-white py-2 pl-4">
-        Home {`>`} Sign in
+        <Link to="/" className="text-white">
+          Home
+        </Link>{" "}
+        {`>`} Sign in
       </Container>
       <Container
         fluid
