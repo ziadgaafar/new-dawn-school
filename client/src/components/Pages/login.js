@@ -6,12 +6,26 @@ import bgImage from "../../images/university-back.png";
 import person from "../../images/person.png";
 
 const Login = () => {
+  const loginSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log("submit");
+  };
+
   return (
-    <>
-      <Container>
+    <div
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+      }}
+    >
+      <Container fluid className="bg-white">
         <Row>
           <Col className="d-flex justify-content-center gap-2">
-            <h1 className="display-4 fw-bolder">Connecting to</h1>
+            <h1 className="display-5 d-flex align-items-center fw-bolder">
+              Connecting to
+            </h1>
             <img src={logo} alt="Logo" style={{ height: 80 }} />
           </Col>
           <p className="fw-bolder text-center">
@@ -26,16 +40,7 @@ const Login = () => {
         </Link>{" "}
         {`>`} Sign in
       </Container>
-      <Container
-        fluid
-        style={{
-          backgroundImage: `url(${bgImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          minHeight: "100%",
-          height: "100%",
-        }}
-      >
+      <Container fluid>
         <Row className="d-flex justify-content-center py-4">
           <Col xs={10} sm={8} md={6} lg={4} xl={3} className="bg-white py-2">
             <div className="d-flex align-items-center justify-content-center gap-2">
@@ -55,12 +60,7 @@ const Login = () => {
             </div>
             <h5 className="fw-bolder text-center mt-2 mr-1">Sign In</h5>
 
-            <Form
-              onSubmit={(e) => {
-                e.preventDefault();
-                console.log("submit");
-              }}
-            >
+            <Form onSubmit={loginSubmitHandler}>
               <Container className="">
                 <Form.Group className="mb-4" controlId="formGridEmail">
                   <Form.Label className="fw-bolder">Email Address</Form.Label>
@@ -86,7 +86,7 @@ const Login = () => {
           </Col>
         </Row>
       </Container>
-    </>
+    </div>
   );
 };
 
