@@ -40,7 +40,7 @@ const NavbarComponent = ({ dontShow }) => {
                 as={Link}
                 to={"/login"}
               >
-                LogIn
+                Sign in
               </Nav.Link>
 
               <NavDropdown
