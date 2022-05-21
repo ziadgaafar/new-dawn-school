@@ -24,7 +24,7 @@ const NavbarComponent = ({ dontShow }) => {
           expand="lg"
           variant="dark"
           bg="black"
-          className="main-navbar p-0 bg-light"
+          className="main-navbar p-0"
         >
           <Navbar.Toggle
             className="burger text-center bg-dark"

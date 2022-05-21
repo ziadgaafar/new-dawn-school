@@ -1,5 +1,6 @@
 .main-navbar{
   width: 100%;
+  background-color: #e0e0e0 !important;
 }
 
 .nav {
@@ -56,7 +57,7 @@
      left: 80%;
     }
     .main-navbar{
-
+      background-color: black !important;
     }
 }
 
