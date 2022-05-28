@@ -18,37 +18,11 @@ import Form from "./components/Pages/form";
 import Covid from "./components/Pages/covid";
 import Login from "./components/Pages/login";
 
-import axios from "axios";
-
 import "./App.css";
-import { useEffect, useLayoutEffect, useState } from "react";
-import { useHttpClient } from "./hooks/http-hook";
 
 function App() {
-  const [data, setData] = useState([]);
-  const { sendRequest, isLoading } = useHttpClient();
-
-  useLayoutEffect(() => {
-    const fetch = async () => {
-      const responseData = await sendRequest(
-        "post",
-        "https://localhost:4000/login",
-        { email: "ziby#oisjdg", password: "3i4203948" }
-      );
-      setData(responseData);
-    };
-    fetch();
-  }, []);
-
-  useEffect(() => {
-    console.log(isLoading);
-  }, [isLoading]);
-
   return (
     <>
-      {data.map((post) => (
-        <div className="border d-flex">{post.body}</div>
-      ))}
       <BrowserRouter>
         <Logo dontShow={["/login", "/dashboard"]} />
         <Navbar dontShow={["/login", "/dashboard"]} />
