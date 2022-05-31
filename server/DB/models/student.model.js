@@ -16,7 +16,8 @@ const studentSchema=new mongoose.Schema({
     studentLevel:{type:String, required:true},
     studentCurrentSchool:{type:String, required:true},
     submitQuestion:{type:String, required:true},
-    isConfirmed:{type:Boolean, default:false}
+    isConfirmed:{type:Boolean, default:false},
+    role:{type:String,default:"student"}
 })
 studentSchema.pre("save", function (next){
     const gpass = generate.generate({

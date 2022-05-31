@@ -10,7 +10,8 @@ const teacherSchema = new mongoose.Schema({
     lastname:{type:String, required:true},
     courses:{type:Array, required:true},
     salary:{type:String, required:true},
-    verified:{type:Boolean, default:false}
+    verified:{type:Boolean, default:false},
+    role:{type:String,default:"teacher"}
 })
 teacherSchema.pre("save", function(next){
     const gpass = generate.generate({

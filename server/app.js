@@ -8,8 +8,8 @@ const initcon = require("./DB/connection");
 initcon();
 
 //All Routes required here
-/* Student Routes  ====> {/student/Register ==> for student signup}
-   Teacher Routes  ====> {/teacher/addTeacher ==> for teacher signup}
+/* Student Routes  ====> {/student/Register ==> for student signup} + {/student/dashboard ==> for student dashboard}
+   Teacher Routes  ====> {/teacher/addTeacher ==> for teacher signup} + {/teacher/dashboard ==> for teacher dashboard}
    Login Route     ====> {/user/login ==> for login}
    Contact Route   ====> {/contactus ==> for contacting}
 */

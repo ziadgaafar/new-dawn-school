@@ -41,5 +41,8 @@ const teacherVerification = async (req,res,next) => {
         res.status(500).json({Message:"Server Error",error})
     }
 }
+const showTeachertDash = () =>{
+    console.log("working teacher");
+}
 
-module.exports = {teacherAddition, teacherVerification}
+module.exports = {teacherAddition, teacherVerification, showTeachertDash}

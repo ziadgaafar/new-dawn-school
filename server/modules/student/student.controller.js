@@ -39,5 +39,9 @@ const confirmRegister=async(req,res)=>{
         res.status(500).json({Message:"Server Error",error})
     }
 }
+
+const showStudentDash = (req,res,next) =>{
+    console.log("Working");
+}
   
-module.exports={studentRegister,confirmRegister}
+module.exports={studentRegister,confirmRegister,showStudentDash}

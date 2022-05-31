@@ -1,6 +1,5 @@
 const studentModel = require("../../DB/models/student.model");
 const teacherModel = require("../../DB/models/teacher.model");
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const userLogin = async (req,res,next) => {
@@ -9,8 +8,8 @@ const userLogin = async (req,res,next) => {
         const checkStudent = await studentModel.findOne({email});
         if (checkStudent) {
             if (checkStudent.password == password && checkStudent.verified == true) {
-                //token = jwt.sign(checkTeacher,process.env.TOKEN_KEY);
-                res.json({message:"Completed"});
+                const token = jwt.sign({id:checkStudent._id},process.env.TOKEN_KEY);
+                res.json({message:"Completed"},token);
             } else {
                 res.json({Error:"student password is incorrect!! or not verified"})
             };
@@ -18,8 +17,8 @@ const userLogin = async (req,res,next) => {
             const checkTeacher = await teacherModel.findOne({email});
             if (checkTeacher) {
                 if (checkTeacher.password == password && checkTeacher.verified == true) {
-                        //token = jwt.sign(checkTeacher,process.env.TOKEN_KEY);
-                        res.json({message:"Completed"});
+                        const token = jwt.sign({id:checkTeacher._id},process.env.TOKEN_KEY);
+                        res.json({message:"Completed",token});
                 } else {
                         res.json({Error:"teacher password is incorrect!! or not verified"})
                 };
