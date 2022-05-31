@@ -2,6 +2,10 @@ import React from "react";
 import "./home.css";
 import ph2 from "../../images/info-card1.jpg";
 import ph3 from "../../images/info-card2.jpg";
+import img1 from "../../images/home-img-1.png";
+import img2 from "../../images/home-img-2.png";
+import img3 from "../../images/home-img-3.png";
+import lookingForHelp from "../../images/looking-for-help.png";
 
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
@@ -142,7 +146,7 @@ const Home = () => {
 
       <Container className="info-cards p-0 mt-5">
         <Row>
-          <Col className="p-0" sm="12" lg="6">
+          <Col className="p-0" xs={12} md={6}>
             <img src={ph2} alt="ph2" className="info-img" />
           </Col>
           <Col className="m-auto p-4">
@@ -163,11 +167,11 @@ const Home = () => {
 
       <Container className="info-cards p-0 mt-5">
         <Row>
-          <Col sm="12" lg="6" className="p-0">
+          <Col xs={12} md={6} className="p-0">
             <img src={ph3} alt="ph3" className="info-img" />
           </Col>
           <Col className="m-auto p-4">
-            <div className="card-info-content card-info-content2">
+            <div className="">
               <h1 className="font-weight-bold ">
                 The COVID-19 pandemic has changed education forever. This is how
               </h1>
@@ -188,6 +192,57 @@ const Home = () => {
                 <button className="read-more ">Read More</button>{" "}
               </Link>
             </div>
+          </Col>
+        </Row>
+      </Container>
+
+      <Container fluid className="bg-light my-5">
+        <Row fluid className="">
+          {[
+            { img: img1, text: "School Week", number: 11 },
+            { img: img2, text: "Teachers", number: 42 },
+            { img: img3, text: "Current Students", number: 750 },
+          ].map((item) => (
+            <Col
+              key={item.number}
+              xs={12}
+              md={4}
+              className="d-flex flex-column align-items-center justify-content-center"
+            >
+              <div className="d-flex flex-column align-items-center">
+                <img src={item.img} alt={item.text} className="w-50 my-2" />
+                <p className="fw-bolder">{item.text}</p>
+              </div>
+              <p className="fw-bold" style={{ letterSpacing: 6 }}>
+                {item.number}
+              </p>
+            </Col>
+          ))}
+        </Row>
+      </Container>
+
+      <Container fluid className="bg-light my-5">
+        <Row>
+          <Col
+            xs={12}
+            md={8}
+            className="text-center text-md-left mt-4 m-md-auto"
+          >
+            <h6 className="display-6">Looking for help?</h6>
+            <p>
+              Our Help Desk on this page can help. Select “I’m a CGA
+              student/parent with a question” to get started. Our Help Desk can
+              handle your frequently asked questions about life at CGA. If you
+              can’t find what you’re looking for, you will be connected with one
+              of our CGA Support Team members.
+            </p>
+          </Col>
+          <Col xs={12} md={4}>
+            <img
+              src={lookingForHelp}
+              alt="looking for help"
+              className="w-100"
+            />
           </Col>
         </Row>
       </Container>

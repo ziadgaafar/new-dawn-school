@@ -24,8 +24,8 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Logo dontShow={["/login"]} />
-        <Navbar dontShow={["/login"]} />
+        <Logo dontShow={["/login", "/dashboard"]} />
+        <Navbar dontShow={["/login", "/dashboard"]} />
         <Routes>
           <Route path="/" exact element={<Home />} />
           <Route path="/student" element={<Student />} />
