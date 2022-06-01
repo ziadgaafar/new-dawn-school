@@ -2,8 +2,10 @@ const express = require("express");
 const HttpError = require("./common/http-error");
 const env = require("dotenv").config();
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 //All Routes required here
