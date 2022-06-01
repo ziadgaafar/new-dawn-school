@@ -1,15 +1,23 @@
 const route = require("express").Router();
 //controllers call
-const{studentRegister,confirmRegister,showStudentDash}=require("./student.controller");
+const {
+  studentRegister,
+  confirmRegister,
+  showStudentDash,
+} = require("./student.controller");
 //validation call
 const validationer = require("../../midleware/validationer");
-const validateSignup =require("./student.validator");
+const validateSignup = require("./student.validator");
 //authorization call
 const authorizationer = require("../../midleware/authorizationer");
 const endPoints = require("../../common/endPoints");
 
-route.post("/student/Register",validationer(validateSignup),studentRegister)
-route.get("/student/confirmation/:token",confirmRegister);
-route.get("/student/dashboard",authorizationer(endPoints.studentDash),showStudentDash);
+route.post("/register", validationer(validateSignup), studentRegister);
+route.get("/confirmation/:token", confirmRegister);
+route.get(
+  "/dashboard",
+  authorizationer(endPoints.studentDash),
+  showStudentDash
+);
 
-module.exports = route
+module.exports = route;
