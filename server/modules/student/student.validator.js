@@ -17,7 +17,6 @@ const validateSignup = {
       city: joi.string().required(),
       dateOfBirth: joi.string().required(),
       studentLevel: joi.string().required(),
-      studentCurrentSchool: joi.string(),
       submitQuestion: joi.string(),
     }),
 };

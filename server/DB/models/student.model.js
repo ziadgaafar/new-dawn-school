@@ -12,7 +12,6 @@ const studentSchema = new mongoose.Schema({
   city: { type: String, required: true },
   dateOfBirth: { type: String, required: true, trim: true },
   studentLevel: { type: String, required: true },
-  studentCurrentSchool: { type: String, default: "none" },
   submitQuestion: { type: String },
   isConfirmed: { type: Boolean, default: false },
   role: { type: String, default: "student" },
