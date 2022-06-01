@@ -44,7 +44,7 @@ const studentRegister = async (req, res, next) => {
       <a style="border:1px solid grey;padding:8px;border-radius:8px;text-decoration:none" href="${req.protocol}://${req.headers.host}/api/student/confirmation/${token}">click here</a>
     </div>`;
       sendEmail(email, message);
-      res.status(200).json({ message: "addStudent", addStudent });
+      res.status(200).json({ message: "Applied Successfully" });
     }
   } catch (error) {
     console.log(error);
