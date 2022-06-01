@@ -4,12 +4,30 @@ import { Link } from "react-router-dom";
 import logo from "../NavBar/logo.png";
 import bgImage from "../../images/university-back.png";
 import person from "../../images/person.png";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { useHttpClient } from "../../hooks/http-hook";
 
 const Login = () => {
-  const loginSubmitHandler = (e) => {
-    e.preventDefault();
-    console.log("submit");
-  };
+  const { sendRequest } = useHttpClient();
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: yup.object({
+      email: yup.string().email("Invalid Email Address"),
+      password: yup.string().required().min(8),
+    }),
+    onSubmit: async (values) => {
+      const data = await sendRequest({
+        method: "POST",
+        body: values,
+        url: "/login",
+      });
+      console.log(data);
+    },
+  });
 
   return (
     <div
@@ -60,19 +78,41 @@ const Login = () => {
             </div>
             <h5 className="fw-bolder text-center mt-2 mr-1">Sign In</h5>
 
-            <Form onSubmit={loginSubmitHandler}>
+            <Form onSubmit={formik.handleSubmit}>
               <Container className="">
                 <Form.Group className="mb-4" controlId="formGridEmail">
                   <Form.Label className="fw-bolder">Email Address</Form.Label>
                   <Form.Label className="">
                     Sign in with your New Dawn email address
                   </Form.Label>
-                  <Form.Control type="email" placeholder="Enter email" />
+                  <Form.Control
+                    name="email"
+                    type="email"
+                    placeholder="Enter email"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                  />
+                  {formik.touched.email && formik.errors.email ? (
+                    <div className="position-absolute text-danger">
+                      {formik.errors.email}
+                    </div>
+                  ) : null}
                 </Form.Group>
 
                 <Form.Group className="" controlId="formGridPassword">
                   <Form.Label className="fw-bolder">Password</Form.Label>
-                  <Form.Control type="password" placeholder="Password" />
+                  <Form.Control
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                  />
+                  {formik.touched.password && formik.errors.password ? (
+                    <div className="position-absolute text-danger">
+                      {formik.errors.password}
+                    </div>
+                  ) : null}
                 </Form.Group>
                 <button
                   type="submit"
