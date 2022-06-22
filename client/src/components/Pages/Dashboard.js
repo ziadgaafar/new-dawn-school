@@ -4,8 +4,9 @@ import { Route, Routes, Navigate } from "react-router-dom";
 
 const Sidebar = () => <div>Dashboard - Sidebar</div>;
 const Student = () => <div>Dashboard - Student</div>;
-const Settings = () => <div>Dashboard - Settings</div>;
+const Courses = () => <div>Dashboard - Courses</div>;
 const Chats = () => <div>Dashboard - Chats</div>;
+const Settings = () => <div>Dashboard - Settings</div>;
 
 const Dashboard = ({}) => {
   // ملكش دعوه بدول يغالي
@@ -15,10 +16,11 @@ const Dashboard = ({}) => {
   return (
     <>
       <Sidebar />
-      <Student />
       <Routes>
-        <Route path="settings" element={<Settings />} />
+        <Route path="/" exact element={<Student />} />
+        <Route path="courses" element={<Courses />} />
         <Route path="chats" element={<Chats />} />
+        <Route path="settings" element={<Settings />} />
       </Routes>
     </>
   );
