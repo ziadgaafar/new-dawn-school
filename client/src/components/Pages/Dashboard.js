@@ -4,8 +4,8 @@ import { Route, Routes, Navigate } from "react-router-dom";
 
 const Sidebar = () => <div>Dashboard - Sidebar</div>;
 const Student = () => <div>Dashboard - Student</div>;
-const Settings = () => <div>Hello - Settings</div>;
-const Chats = () => <div>Hello - Chats</div>;
+const Settings = () => <div>Dashboard - Settings</div>;
+const Chats = () => <div>Dashboard - Chats</div>;
 
 const Dashboard = ({}) => {
   // ملكش دعوه بدول يغالي
