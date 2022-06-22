@@ -2,7 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Route, Routes, Navigate } from "react-router-dom";
 
-const Header = () => <div>Dashboard - Header</div>;
+const Sidebar = () => <div>Dashboard - Sidebar</div>;
+const Student = () => <div>Dashboard - Student</div>;
 const Settings = () => <div>Hello - Settings</div>;
 const Chats = () => <div>Hello - Chats</div>;
 
@@ -13,7 +14,8 @@ const Dashboard = ({}) => {
 
   return (
     <>
-      <Header />
+      <Sidebar />
+      <Student />
       <Routes>
         <Route path="settings" element={<Settings />} />
         <Route path="chats" element={<Chats />} />
