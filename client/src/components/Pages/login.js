@@ -1,15 +1,19 @@
-import React from "react";
-import { Col, Container, Form, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Col, Container, Form, Row, Toast } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../NavBar/logo.png";
 import bgImage from "../../images/university-back.png";
 import person from "../../images/person.png";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useHttpClient } from "../../hooks/http-hook";
+import { useDispatch } from "react-redux";
+import { LOGIN } from "../../redux/auth";
 
 const Login = () => {
-  const { sendRequest } = useHttpClient();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { sendRequest, error, clearError } = useHttpClient();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -25,7 +29,8 @@ const Login = () => {
         body: values,
         url: "/login",
       });
-      console.log(data);
+      dispatch(LOGIN({ token: data.token, user: {} }));
+      navigate("/dashboard");
     },
   });
 
@@ -38,6 +43,20 @@ const Login = () => {
         minHeight: "100vh",
       }}
     >
+      <Toast
+        show={error}
+        onClose={() => clearError()}
+        bg="danger"
+        className="position-fixed m-2"
+        autohide
+        delay={3000}
+      >
+        <Toast.Header>
+          <strong className="me-auto">Error</strong>
+        </Toast.Header>
+        <Toast.Body>{error}</Toast.Body>
+      </Toast>
+
       <Container fluid className="bg-white">
         <Row>
           <Col className="d-flex justify-content-center gap-2">

@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./components/NavBar/Navbar";
@@ -17,15 +17,20 @@ import Apply from "./components/Pages/apply";
 import Form from "./components/Pages/form";
 import Covid from "./components/Pages/covid";
 import Login from "./components/Pages/login";
+import Dashboard from "./components/Pages/Dashboard";
 
 import "./App.css";
+import { Provider } from "react-redux";
+import store from "./redux/store";
+
+const dontShow = ["login", "dashboard"];
 
 function App() {
   return (
-    <>
+    <Provider store={store}>
       <BrowserRouter>
-        <Logo dontShow={["/login", "/dashboard"]} />
-        <Navbar dontShow={["/login", "/dashboard"]} />
+        <Logo dontShow={dontShow} />
+        <Navbar dontShow={dontShow} />
         <Routes>
           <Route path="/" exact element={<Home />} />
           <Route path="/student" element={<Student />} />
@@ -39,10 +44,12 @@ function App() {
           <Route path="/form" element={<Form />} />
           <Route path="/covid" element={<Covid />} />
           <Route path="/login" element={<Login />} />
+          <Route path="dashboard/*" element={<Dashboard />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
-        <Footer dontShow={["/login"]} />
+        <Footer dontShow={dontShow} />
       </BrowserRouter>
-    </>
+    </Provider>
   );
 }
 

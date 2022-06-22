@@ -8,7 +8,7 @@ const NavbarComponent = ({ dontShow }) => {
   const [show, setShow] = useState(true);
   const location = useLocation();
   useEffect(() => {
-    const pathname = location.pathname;
+    const pathname = location.pathname.split("/")[1];
     if (dontShow.includes(pathname)) {
       setShow(false);
     } else {

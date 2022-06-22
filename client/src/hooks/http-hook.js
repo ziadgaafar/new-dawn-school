@@ -25,5 +25,9 @@ export const useHttpClient = () => {
     }
   };
 
-  return { sendRequest, isLoading, error };
+  const clearError = () => {
+    setError(null);
+  };
+
+  return { sendRequest, isLoading, error, clearError };
 };
