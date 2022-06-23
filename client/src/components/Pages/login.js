@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Col, Container, Form, Row, Toast } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../NavBar/logo.png";
