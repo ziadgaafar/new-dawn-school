@@ -1,28 +1,40 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { Container, Row } from "react-bootstrap";
+
 import { Route, Routes, Navigate } from "react-router-dom";
+import './dashboard.css'
 
-const Sidebar = () => <div>Dashboard - Sidebar</div>;
-const Student = () => <div>Dashboard - Student</div>;
-const Courses = () => <div>Dashboard - Courses</div>;
-const Chats = () => <div>Dashboard - Chats</div>;
-const Settings = () => <div>Dashboard - Settings</div>;
+import Sidebar from '../Dashboard/sidebar'
+import Student from "../Dashboard/student";
+import Courses from "../Dashboard/courses";
+import Chats from "../Dashboard/chats";
+import Settings from "../Dashboard/settings";
 
-const Dashboard = ({}) => {
+
+
+const Dashboard = ({ }) => {
   // ملكش دعوه بدول يغالي
   // const { token, user } = useSelector((state) => state.auth);
   // if (!token) return <Navigate to="/login" />;
 
   return (
-    <>
-      <Sidebar />
-      <Routes>
-        <Route path="/" exact element={<Student />} />
-        <Route path="courses" element={<Courses />} />
-        <Route path="chats" element={<Chats />} />
-        <Route path="settings" element={<Settings />} />
-      </Routes>
-    </>
+    <div className="dashboard">
+
+
+
+
+      <Sidebar >
+
+        <Routes >
+          <Route path="/" exact element={<Student />} />
+          <Route path="/courses" element={<Courses />} />
+          <Route path="/chats" element={<Chats />} />
+          <Route path="/settings" element={<Settings />} />
+        </Routes>
+
+      </Sidebar>
+
+    </div>
   );
 };
 

@@ -236,6 +236,12 @@ const Home = () => {
               can’t find what you’re looking for, you will be connected with one
               of our CGA Support Team members.
             </p>
+            <Link as={Link} to={"/contact"}>
+              <button className="contact-but">
+              Contact Us
+              </button>
+            </Link>
+           
           </Col>
           <Col xs={12} md={4}>
             <img

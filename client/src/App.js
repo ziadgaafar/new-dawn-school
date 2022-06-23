@@ -5,8 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./components/NavBar/Navbar";
 import Logo from "./components/NavBar/logo";
 import Home from "./components/Pages/home";
-import Student from "./components/Pages/student";
-import Staff from "./components/Pages/staff";
+
 import AdmissionsInfo from "./components/Pages/admissions-info ";
 import Parents from "./components/Pages/parents";
 import Pricing from "./components/Pages/pricing";
@@ -17,7 +16,7 @@ import Apply from "./components/Pages/apply";
 import Form from "./components/Pages/form";
 import Covid from "./components/Pages/covid";
 import Login from "./components/Pages/login";
-import Dashboard from "./components/Pages/Dashboard";
+import Dashboard from "./components/Pages/dashboard";
 
 import "./App.css";
 import { Provider } from "react-redux";
@@ -33,8 +32,7 @@ function App() {
         <Navbar dontShow={dontShow} />
         <Routes>
           <Route path="/" exact element={<Home />} />
-          <Route path="/student" element={<Student />} />
-          <Route path="/staff" element={<Staff />} />
+        
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/Parents" element={<Parents />} />
           <Route path="/AdmissionsInfo" element={<AdmissionsInfo />} />
