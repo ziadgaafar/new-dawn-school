@@ -19,11 +19,14 @@ const {
   studentRoutes,
   loginRoutes,
   contactRoutes,
+  chatRouter,
+  messageRouter
 } = require("./routes/allRoutes");
 app.use("/api/teacher", teacherRoutes);
 app.use("/api/student", studentRoutes);
 app.use("/api/login", loginRoutes);
 app.use("/api/contactus", contactRoutes);
+app.use(chatRouter,messageRouter);
 
 // Route not found
 
