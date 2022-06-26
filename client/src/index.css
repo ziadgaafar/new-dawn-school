@@ -79,3 +79,7 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+.react-calendar__tile {
+  border-radius: 5px
+}

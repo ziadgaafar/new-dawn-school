@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
-const student = () => {
+const Student = () => {
   return (
-    <div>
-      <h1 className='fw-bold'>Dashboard</h1>
+    <div className="border">
+      <h1 className="fw-bold">Dashboard</h1>
     </div>
-  )
-}
+  );
+};
 
-export default student
+export default Student;
