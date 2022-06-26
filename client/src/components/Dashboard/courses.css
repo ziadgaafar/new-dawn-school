@@ -1,0 +1,61 @@
+.notes{
+   padding: 15px;
+   background-color: white;
+   border-radius: 10%;
+   box-shadow: 5px 5px rgba(148, 148, 148, 0.411);
+}
+
+.english{   
+    color: white;
+    background-image: url('../../images/english.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    height: 300px;
+    border-radius: 8%;
+}
+.mathematics{
+    color: white;
+    background-image: url('../../images/math.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    height: 300px;
+    border-radius: 8%;
+}
+.science{
+    color: white;
+    background-image: url('../../images/science.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    height: 300px;
+    border-radius: 8%;
+}
+.youtube{
+    border: 0px;
+    font-size: 60px;
+    color: #D2D2D2;
+    margin-left: 20px;
+}
+.youtube :hover { 
+    color: red ;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+@media only screen and (max-width: 560px) { 
+    .math-head , .science-head {
+     font-size: 23px;
+    }
+    .english , .mathematics , .science{ 
+        background-size: 180%;
+    }
+
+ 
+}

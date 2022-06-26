@@ -18,19 +18,19 @@ export const SiderbarData = [
     },
     {
         title : 'Courses' ,
-        path : '/courses' ,
+        path : '/dashboard/courses' ,
         icon : <ImIcons.ImBooks/> ,
         cName : 'dashbord-nav-text'
     },
     {
         title : 'Chats' ,
-        path : '/chats' ,
+        path : '/dashboard/chats' ,
         icon : <BsIcons.BsFillChatRightFill/> ,
         cName : 'dashbord-nav-text'
     },
     {
         title : 'Settings' ,
-        path : '/settings' ,
+        path : '/dashboard/settings' ,
         icon : <IoIcons.IoMdSettings/> ,
         cName : 'dashbord-nav-text'
     },

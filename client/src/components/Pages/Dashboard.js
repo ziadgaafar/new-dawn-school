@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 
 import { Route, Routes, Navigate } from "react-router-dom";
 import './dashboard.css'
@@ -18,21 +18,21 @@ const Dashboard = ({ }) => {
   // if (!token) return <Navigate to="/login" />;
 
   return (
-    <div className="dashboard">
+    <div className="dashboard w-100">
 
 
+  
+          <Sidebar/> 
+     
+          <Routes >
+            <Route path="/" exact element={<Student />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/chats" element={<Chats />} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
+       
 
 
-      <Sidebar >
-
-        <Routes >
-          <Route path="/" exact element={<Student />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/chats" element={<Chats />} />
-          <Route path="/settings" element={<Settings />} />
-        </Routes>
-
-      </Sidebar>
 
     </div>
   );

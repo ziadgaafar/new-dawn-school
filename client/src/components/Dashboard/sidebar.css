@@ -1,91 +1,59 @@
-.dashbord-container{
-  display: flex;
+
+.open-btnn{
+  border-radius: 50%;
+  border: 0px ;
+  color: white;
+  background-color: #539cd3;
+  padding: 10px;
+  margin: 20px;
 }
-.dashbord-navbar {
+.open-btn{
+font-size: 40px;
+}
+.open-btnn:hover{ 
+  background-color: #68B9F8;
+}
+.slider-close-ptn{
+  border: 0px;
+  border-radius: 50%;
+  color: #539cd3;
+  font-size: 60px;
   background-color: white;
-    width: 100px;
-    height: 10vh;
-    display: flex;
-    justify-content: center;
-   
-  }
 
-  .menu-bars {
-    margin-left: 2rem;
-    font-size: 2rem;
-    background: none;
-  }
-  
-  .dashbord-nav-menu {
-    background-color: white;
-    width: 230px;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    transition: 850ms;
-  }
-  
-  .dashbord-nav-menu.active {
-    width: 100px;
-    left: 0;
-    transition: 350ms;
-  }
-  .dashbord-nav-menu-items {
-    width: 100%;
-  }
-  .dashbord-navbar-toggle {
- 
-    width: 100%;
-    height: 80px;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-  }
- 
-  .dashbord-Logo{
-   
-    width: 100%;
-    height: 100px;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    margin-bottom: 50px;
-  }
-  .dashbord-logo-photo{
-    padding-top: 10px;
-   
- 
-  }
+}
+.slider-close-ptn :hover{ 
+  color: #68B9F8;
+}
 
-  .dashbord-nav-text {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    padding: 8px 0px 8px 16px;
-    list-style: none;
-    height: 60px;
-  }
 
-  
-  .dashbord-nav-text a {
-    text-decoration: none;
-    color: #707070;
-    font-size: 18px;
-    width: 95%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    border-radius: 4px;
-  }
-  
-  .dashbord-nav-text a:hover {
-    color: black;
-  }
+.dashbord-nav-menu-items{
+  width: 100%;
+  list-style: none;
 
-  span {
-    margin-left: 16px;
-  }
+}
+
+.dashbord-logo-photo{
+  width: 150px;
+  height: 150px;
+  margin-left: 20%;
+}
+.dashbord-nav-text{
+  padding-top: 20px;
+}
+.dashbord-nav-text a {
+  text-decoration: none;
+  color: #707070;
+  font-size: 22px;
+  width: 95%;
+  height: 100%;
+  align-items: center;
+  padding:20px;
+  margin-left: 20%;
+  
+}
+.dashbord-nav-text a:hover {
+  color: black;
+}
+span {
+  margin-left: 16px;
+}

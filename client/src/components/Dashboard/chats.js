@@ -2,9 +2,9 @@ import React from 'react'
 
 const chats = () => {
   return (
-    <div>
+    <h1>
       chats
-    </div>
+    </h1>
   )
 }
 
