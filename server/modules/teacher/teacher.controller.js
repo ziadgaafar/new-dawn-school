@@ -1,4 +1,5 @@
 const teacherModel = require("../../DB/models/teacher.model");
+const courseModel=require("../../DB/models/course.Model")
 const sendEmail = require("../../common/verification");
 const jwt = require("jsonwebtoken");
 
@@ -45,4 +46,53 @@ const showTeachertDash = () =>{
     console.log("working teacher");
 }
 
-module.exports = {teacherAddition, teacherVerification, showTeachertDash}
+const showCourses = async(req,res,next) =>{
+    const check = await courseModel.find({teacher:req.user._id});
+    if (!check==[]) {
+        res.status(200).json({check});
+    } else {
+        res.status(400).json({Error:"No Founded Courses"})
+    }
+}
+
+const uploadBook=async(req,res)=>{
+    const {grade,book} = req.body;
+    const check = await courseModel.find({teacher:req.user._id, grade:grade});
+    console.log(check);
+    if (check) {
+        console.log(check._id);
+        await courseModel.updateOne({_id:check[0]._id},{book:book})
+        res.status(200).json({Message:"Updated Successfully"})
+    } else {
+        res.status(400).json({Error:"course not found"})
+    }
+}
+
+
+const uploadExam=async(req,res)=>{
+    const {grade,exam} = req.body;
+    const check = await courseModel.find({teacher:req.user._id, grade:grade});
+    if (check) {
+        await courseModel.updateOne({_id:check[0]._id},{exam:exam})
+        res.status(200).json({Message:"Updated Successfully"})
+    } else {
+        res.status(400).json({Error:"course not found"})
+    }
+}
+
+const uploadassign=async(req,res)=>{
+    const {grade,assign} = req.body;
+    const check = await courseModel.find({teacher:req.user._id, grade:grade});
+    console.log(check);
+    if (check) {
+        console.log(check._id);
+        await courseModel.updateOne({_id:check[0]._id},{assignment:assign})
+        res.status(200).json({Message:"Updated Successfully"})
+    } else {
+        res.status(400).json({Error:"course not found"})
+    }
+}
+
+
+
+module.exports = {teacherAddition, teacherVerification, showTeachertDash,showCourses,uploadBook,uploadExam,uploadassign}

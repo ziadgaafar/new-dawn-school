@@ -8,7 +8,7 @@ const teacherSchema = new mongoose.Schema({
     password:{type:String},
     firstname:{type:String   },
     lastname:{type:String   },
-    courses:{type:Array   },
+    courses:[{type:mongoose.Schema.Types.ObjectId,ref:"course"  }],
     salary:{type:String   },
     verified:{type:Boolean, default:false},
     role:{type:String,default:"teacher"}

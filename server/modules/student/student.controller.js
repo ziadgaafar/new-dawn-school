@@ -2,6 +2,7 @@ const studentModel = require("../../DB/models/student.model");
 const sendEmail = require("../../common/verification");
 const jwt = require("jsonwebtoken");
 const HttpError = require("../../common/http-error");
+const courseModel = require("../../DB/models/course.Model");
 
 const studentRegister = async (req, res, next) => {
   try {
@@ -85,8 +86,17 @@ const confirmRegister = async (req, res) => {
   }
 };
 
+const showCourses = async(req,res,next) =>{
+  const check = await courseModel.find({student:req.user._id});
+  if (!check==[]) {
+    res.status(200).json({check});
+  } else {
+    res.status(400).json({Error:"No Founded Courses"})
+  }
+}
+
 const showStudentDash = (req, res, next) => {
   console.log("Working");
 };
 
-module.exports = { studentRegister, confirmRegister, showStudentDash };
+module.exports = { studentRegister, confirmRegister, showStudentDash, showCourses};

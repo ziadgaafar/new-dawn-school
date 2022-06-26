@@ -6,11 +6,19 @@ const {
   teacherAddition,
   teacherVerification,
   showTeachertDash,
+  uploadBook,
+  uploadExam,
+  uploadassign,
+  showCourses
 } = require("./teacher.controller");
 const validateAdding = require("./teacher.validator");
 
 route.post("/addTeacher", validationer(validateAdding), teacherAddition);
 route.get("/confirm/:token", teacherVerification);
 route.get("/dashboard", auth(endPoints.teacherDash), showTeachertDash);
+route.get("/api/course/all", auth(), showCourses)
+route.post("/api/corse/uploadBook",auth(),uploadBook)
+route.post("/api/corse/uploadExam",auth(),uploadExam)
+route.post("/api/corse/uploadassign",auth(),uploadassign)
 
 module.exports = route;
