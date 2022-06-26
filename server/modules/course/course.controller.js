@@ -33,4 +33,8 @@ const updateCourse = async(req,res,next) => {
     }
 }
 
-module.exports = {createCourse, deleteCourse, updateCourse}
+const addStudent=async(req,res)=>{
+
+}
+
+module.exports = {createCourse, deleteCourse, updateCourse,addStudent}
