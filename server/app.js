@@ -3,10 +3,13 @@ const HttpError = require("./common/http-error");
 const env = require("dotenv").config();
 const mongoose = require("mongoose");
 const cors = require("cors");
+const path = require('path');
+const bodyParser = require('body-parser');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.json());
 
 //All Routes required here
 /* Student Routes  ====> {/api/student/Register ==> for student signup} + {/api/student/dashboard ==> for student dashboard}
@@ -21,13 +24,15 @@ const {
   contactRoutes,
   chatRouter,
   messageRouter,
-  courseRouter
+  courseRouter,
+  bookRouter
 } = require("./routes/allRoutes");
 app.use("/api/teacher", teacherRoutes);
 app.use("/api/student", studentRoutes);
 app.use("/api/login", loginRoutes);
 app.use("/api/contactus", contactRoutes);
-app.use(chatRouter,messageRouter,courseRouter);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(chatRouter,messageRouter,courseRouter,bookRouter);
 
 // Route not found
 
@@ -45,7 +50,7 @@ app.use((error, req, res, next) => {
 mongoose
   .connect(process.env.CON_LINK, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   })
   .then(() => {
     port = parseInt(process.env.PORT);
