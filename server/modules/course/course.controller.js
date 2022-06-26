@@ -32,6 +32,9 @@ const updateCourse = async(req,res,next) => {
         res.status(400).json({Error:"course not found"});
     }
 }
+const addTeacher = async (req,res,next) => {
+    
+}
 
 const addStudent=async(req,res)=>{
 
