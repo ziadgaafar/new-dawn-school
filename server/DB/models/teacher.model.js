@@ -4,12 +4,12 @@ const generate = require("generate-password");
 const salt_rounds = parseInt(process.env.SALT)
 
 const teacherSchema = new mongoose.Schema({
-    email:{type:String, required:true, unique:true},
+    email:{type:String   , unique:true},
     password:{type:String},
-    firstname:{type:String, required:true},
-    lastname:{type:String, required:true},
-    courses:{type:Array, required:true},
-    salary:{type:String, required:true},
+    firstname:{type:String   },
+    lastname:{type:String   },
+    courses:{type:Array   },
+    salary:{type:String   },
     verified:{type:Boolean, default:false},
     role:{type:String,default:"teacher"}
 })

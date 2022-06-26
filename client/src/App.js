@@ -16,7 +16,7 @@ import Apply from "./components/Pages/apply";
 import Form from "./components/Pages/form";
 import Covid from "./components/Pages/covid";
 import Login from "./components/Pages/login";
-import Dashboard from "./components/Pages/dashboard";
+import Dashboard from "./components/Pages/Dashboard";
 
 import "./App.css";
 import { Provider } from "react-redux";
@@ -32,7 +32,6 @@ function App() {
         <Navbar dontShow={dontShow} />
         <Routes>
           <Route path="/" exact element={<Home />} />
-        
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/Parents" element={<Parents />} />
           <Route path="/AdmissionsInfo" element={<AdmissionsInfo />} />

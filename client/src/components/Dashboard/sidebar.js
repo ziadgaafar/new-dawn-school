@@ -34,7 +34,6 @@ function Sidebar() {
             </li>
             {SiderbarData.map((item, index) => {
               return (
-
                 <li key={index} className={item.cName}>
                   <Link to={item.path}  >
                     {item.icon}

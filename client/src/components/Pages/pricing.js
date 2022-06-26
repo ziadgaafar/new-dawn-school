@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 
 const Pricing = () => {
   const color = "#E8E4F6";
@@ -123,8 +123,8 @@ const Pricing = () => {
               <div
                 className="rounded text-center  d-flex flex-column justify-content-center"
                 style={{
-                  color: selected == plan.id && colorDark,
-                  backgroundColor: selected == plan.id ? color : color,
+                  color: selected === plan.id && colorDark,
+                  backgroundColor: selected === plan.id ? color : color,
                   width: 90,
                 }}
               >

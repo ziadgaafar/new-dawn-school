@@ -1,13 +1,9 @@
-import React from 'react'
+import React from "react";
 
-
-import * as IoIcons from 'react-icons/io';
-import * as MdIcons from 'react-icons/md';
-import * as ImIcons from 'react-icons/im';
-import * as BsIcons from 'react-icons/bs';
-
-
-
+import * as IoIcons from "react-icons/io";
+import * as MdIcons from "react-icons/md";
+import * as ImIcons from "react-icons/im";
+import * as BsIcons from "react-icons/bs";
 
 export const SiderbarData = [
     {
