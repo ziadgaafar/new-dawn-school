@@ -18,21 +18,24 @@ app.use(bodyParser.json());
    Contact Route   ====> {/api/contactus ==> for contacting}
 */
 const {
+  courseRouter,
   teacherRoutes,
   studentRoutes,
   loginRoutes,
   contactRoutes,
   chatRouter,
-  messageRouter,
-  courseRouter,
-  bookRouter
+  bookRouter,
+  messageRouter
 } = require("./routes/allRoutes");
 app.use("/api/teacher", teacherRoutes);
 app.use("/api/student", studentRoutes);
 app.use("/api/login", loginRoutes);
 app.use("/api/contactus", contactRoutes);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use(chatRouter,messageRouter,courseRouter,bookRouter);
+app.use(courseRouter)
+app.use(chatRouter)
+app.use(bookRouter);
+app.use(messageRouter)
 
 // Route not found
 

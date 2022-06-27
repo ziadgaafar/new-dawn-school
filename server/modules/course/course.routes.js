@@ -1,9 +1,9 @@
-const app = require("express").Router();
+const route = require("express").Router();
 const {createCourse, deleteCourse, updateCourse,addStudent} = require("./course.controller");
 
-app.post("/api/course/create", createCourse);
-app.delete("/api/course/delete", deleteCourse);
-app.put("/api/course/update", updateCourse)
-app.put("/api/course/addStudent", addStudent)
+route.post("/api/course/create", createCourse);
+route.delete("/api/course/delete", deleteCourse);
+route.put("/api/course/update", updateCourse)
+route.put("/api/course/add", addStudent)
 
-module.exports = app
+module.exports = route

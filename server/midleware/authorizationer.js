@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const HttpError = require("../common/http-error");
 const studentModel = require("../DB/models/student.model");
 const teacherModel = require("../DB/models/teacher.model");
 
@@ -6,7 +7,7 @@ const auth = (data) => {
   return async (req, res, next) => {
     let tokenHeader = req.headers["authorization"];
     if (!tokenHeader || !tokenHeader.startsWith("Bearer")) {
-      return next(new HttpError("in valid token", 401));
+      return next(new HttpError("invalid token", 401));
     } else {
       let token = tokenHeader.split(" ")[1];
       let { id } = jwt.verify(token, process.env.TOKEN_KEY);
