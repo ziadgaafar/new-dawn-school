@@ -53,9 +53,9 @@ const Dashboard = ({}) => {
     <div style={{ backgroundColor: "#F6F6F6", minHeight: "100vh" }}>
       <Sidebar />
       <img
-        src={person}
+        src={user.image || person}
         alt="Person"
-        className="position-absolute m-3 top-0"
+        className="position-absolute m-3 top-0 rounded-circle"
         style={{ width: 65, height: 65, right: 0, cursor: "pointer" }}
         onClick={handleShow}
       />
@@ -78,7 +78,7 @@ const Dashboard = ({}) => {
           <div className="w-100 d-flex flex-column align-items-center">
             <img
               className="rounded-circle"
-              src={person}
+              src={user.image || person}
               alt={user.firstName}
               style={{ width: 150, height: 150 }}
             />
