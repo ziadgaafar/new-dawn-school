@@ -86,17 +86,22 @@ const confirmRegister = async (req, res) => {
   }
 };
 
-const showCourses = async(req,res,next) =>{
-  const check = await courseModel.find({student:req.user._id});
-  if (!check==[]) {
-    res.status(200).json({check});
+const showCourses = async (req, res, next) => {
+  const check = await courseModel.find({ student: req.user._id });
+  if (!check == []) {
+    res.status(200).json({ check });
   } else {
-    res.status(400).json({Error:"No Founded Courses"})
+    res.status(400).json({ Error: "No Founded Courses" });
   }
-}
+};
 
 const showStudentDash = (req, res, next) => {
   console.log("Working");
 };
 
-module.exports = { studentRegister, confirmRegister, showStudentDash, showCourses};
+module.exports = {
+  studentRegister,
+  confirmRegister,
+  showStudentDash,
+  showCourses,
+};

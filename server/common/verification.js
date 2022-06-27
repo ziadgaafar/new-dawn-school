@@ -5,7 +5,7 @@ sending verification email using new dawn school official email
 */
 const sendEmail = (email, message) => {
   const transport = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
+    host: "smtp.mail.yahoo.com",
     service: "yahoo",
     port: 587,
     secure: false,
