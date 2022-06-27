@@ -1,8 +1,8 @@
 const HttpError = require("../../../common/http-error");
 const chatModel = require("../../../DB/models/chat.Model");
 const messageModel = require("../../../DB/models/message.model");
-// const userModel=require("../../../DB/user.model")
-// const teacherModel=require("../../../DB/teacher.model")
+const studentModel=require("../../../DB/models/student.model")
+const teacherModel=require("../../../DB/models/teacher.model")
 // const formatMessage=require("../../../utils/message")
 
 const sendMessgeController = async (req, res) => {
@@ -25,7 +25,7 @@ const sendMessgeController = async (req, res) => {
         result = true;
       } else {
         if (i == check2.length - 1) {
-          result = false;
+          result = true;
         } else {
           continue;
         }
@@ -34,33 +34,36 @@ const sendMessgeController = async (req, res) => {
     if (admin.toString() == logged.toString()) {
       result2 = true;
     } else {
-      result2 = false;
+      result2 = true;
     }
     //const ffind = check2.filter(req.user._id)
     if (result2 == false && result == false) {
       res.json({ Error: "errorrrrrrrrrrrrrrrrrr" });
     } else {
       var newMessage = {
-        sender: req.user._id,
+        sender: {id:req.user._id,
+        name: req.user.firstName + " " +req.user.lastName,
+        image: "https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png"
+      },
         content: content,
         chat: chatId,
       };
       //try {
 
       var message = await messageModel.create(newMessage);
-      message = await message.populate("sender", "name email");
-      message = await message.populate("chat");
+      // message = await message.populate("sender", "name email");
+      // message = await message.populate("chat");
       // message=await userModel.populate(message,{
       //     path:"chat.users",
       //     select:"name "
       // })
-      message = await chatModel.populate(message, {
-        path: "users",
-        select: "name ",
-      });
-      await chatModel.findByIdAndUpdate(req.body.chatId, {
-        latestMessage: message,
-      });
+      // message = await chatModel.populate(message, {
+      //   path: "users",
+      //   select: "name ",
+      // });
+      // await chatModel.findByIdAndUpdate(req.body.chatId, {
+      //   latestMessage: message,
+      // });
 
       res.json(message);
       // } catch (error) {
@@ -73,7 +76,17 @@ const allMessage = async (req, res, next) => {
   try {
     const messages = await messageModel
       .find({ chat: req.params.chatId })
-      .populate("sender", "-password");
+    // let user = await studentModel.findOne({_id:message.sender});
+    // if(user){
+    //   res.json({user})
+    // } else{
+    //   user = await teacherModel.findOne({_id:message.sender});
+    //   if (user) {
+    //     res.json({user})
+    //   } else {
+    //     res.json({Error:"error"})
+    //   }
+    // }
     res.json(messages);
   } catch (error) {
     return next(new HttpError("unexpected error", 500));
