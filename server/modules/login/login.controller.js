@@ -15,7 +15,11 @@ const userLogin = async (req, res, next) => {
         return next(new HttpError("Please confirm your E-mail first!", 400));
       }
       const token = jwt.sign({ id: checkStudent._id }, process.env.TOKEN_KEY);
-      res.json({ message: "Signed in successfully", token });
+      res.json({
+        message: "Signed in successfully",
+        token,
+        user: checkStudent,
+      });
     } else {
       const checkTeacher = await teacherModel.findOne({ email });
       if (checkTeacher) {
@@ -27,7 +31,11 @@ const userLogin = async (req, res, next) => {
             { id: checkTeacher._id },
             process.env.TOKEN_KEY
           );
-          res.json({ message: "Completed", token });
+          res.json({
+            message: "Completed",
+            token,
+            user: checkTeacher,
+          });
         } else {
           return next(
             new HttpError(
@@ -46,4 +54,3 @@ const userLogin = async (req, res, next) => {
 };
 
 module.exports = userLogin;
-
