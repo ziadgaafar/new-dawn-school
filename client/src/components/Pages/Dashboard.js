@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { Container, Row, Col, Modal, Button } from "react-bootstrap";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Calendar from "react-calendar";
@@ -14,29 +14,40 @@ import { AiFillStar } from "react-icons/ai";
 import { BsArrowRight } from "react-icons/bs";
 import { MdClose } from "react-icons/md";
 
-import "react-calendar/dist/Calendar.css";
+import { useDispatch, useSelector } from "react-redux";
 
-const user = {
+import "react-calendar/dist/Calendar.css";
+import { LOGIN } from "../../redux/auth";
+
+const dummyuser = {
   name: "Mohamed Ahmed",
   grade: 10,
   image: person,
-  exams: [
-    { name: "English Exam", date: new Date() },
-    { name: "Science Exam", date: new Date() },
-    { name: "Mathematics Exam", date: new Date() },
-  ],
 };
 
-const Dashboard = ({}) => {
-  // ملكش دعوه بدول يغالي
-  // const { token, user } = useSelector((state) => state.auth);
-  // if (!token) return <Navigate to="/login" />;
+const exams = [
+  { name: "English Exam", date: new Date() },
+  { name: "Science Exam", date: new Date() },
+  { name: "Mathematics Exam", date: new Date() },
+];
 
+const Dashboard = ({}) => {
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const [dateValue, setDateValue] = useState(new Date());
+  const { token, user } = useSelector((state) => state.auth);
+
+  const localToken = localStorage.getItem("token");
+  const localUser = JSON.parse(localStorage.getItem("user"));
+
+  useLayoutEffect(() => {
+    if (localToken) dispatch(LOGIN({ token: localToken, user: localUser }));
+  }, []);
+
+  if (!token && !localToken) return <Navigate to="/login" />;
 
   return (
     <div style={{ backgroundColor: "#F6F6F6", minHeight: "100vh" }}>
@@ -67,18 +78,20 @@ const Dashboard = ({}) => {
           <div className="w-100 d-flex flex-column align-items-center">
             <img
               className="rounded-circle"
-              src={user.image}
-              alt={user.name}
+              src={person}
+              alt={user.firstName}
               style={{ width: 150, height: 150 }}
             />
-            <h2 className="fw-bolder">{user.name}</h2>
+            <h2 className="fw-bolder">
+              {user.firstName} {user.lastName}
+            </h2>
             <div className="d-flex align-items-center justify-content-between">
               <AiFillStar
                 style={{ marginTop: -5 }}
                 className="mx-2"
                 size="25"
               />
-              <h4>Grade {user.grade}</h4>
+              <h4>Grade {user.studentLevel}</h4>
             </div>
           </div>
         </Modal.Header>
@@ -101,12 +114,12 @@ const Dashboard = ({}) => {
                 className="display-2 fw-bold my-3"
                 style={{ color: "#3B9BE3", fontFamily: "Tahoma" }}
               >
-                {user.exams.length}
+                {exams.length}
               </h1>
               <h1 className="fw-bold">Exams</h1>
             </div>
             <div className="w-100 d-flex flex-column">
-              {user.exams.map((exam) => (
+              {exams.map((exam) => (
                 <div
                   key={exam.name}
                   className={`mt-2 d-flex justify-content-between`}

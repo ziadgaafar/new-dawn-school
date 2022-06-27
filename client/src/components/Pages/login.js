@@ -29,7 +29,9 @@ const Login = () => {
         body: values,
         url: "/login",
       });
-      dispatch(LOGIN({ token: data.token, user: {} }));
+      dispatch(LOGIN({ token: data.token, user: data.user }));
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
       navigate("/dashboard");
     },
   });

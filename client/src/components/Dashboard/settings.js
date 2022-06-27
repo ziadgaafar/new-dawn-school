@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./settings.css";
 import { Container, Row, Col } from "react-bootstrap";
 import person from "../../images/person.png";
 import { MDBSwitch } from "mdb-react-ui-kit";

@@ -1,19 +1,30 @@
 import React, { useState } from "react";
-import { Offcanvas } from "react-bootstrap";
+import { NavItem, Offcanvas } from "react-bootstrap";
 import "./sidebar.css";
 import * as BiIcons from "react-icons/bi";
 import * as AiIcons from "react-icons/ai";
 
 import { SiderbarData } from "./sidebarData";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../NavBar/logo.png";
+import { FiLogOut } from "react-icons/fi";
+import { useDispatch } from "react-redux";
+import { LOGOUT } from "../../redux/auth";
 
 function Sidebar() {
   const [show, setShow] = useState(false);
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const toggle = () => setShow(!show);
+
+  const logoutHandler = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    dispatch(LOGOUT());
+    navigate("/login");
+  };
 
   return (
     <div>
@@ -42,6 +53,15 @@ function Sidebar() {
                 </li>
               );
             })}
+            <li
+              onClick={logoutHandler}
+              className="d-flex mt-5 justify-content-center dashbord-nav-text"
+            >
+              <Link to="#">
+                <FiLogOut />
+                <span>Logout</span>
+              </Link>
+            </li>
           </ul>
         </div>
       </Offcanvas>

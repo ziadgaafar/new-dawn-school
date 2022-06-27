@@ -5,13 +5,21 @@ export const useHttpClient = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const sendRequest = async ({ method = "GET", url, body = null }) => {
+  const sendRequest = async ({
+    method = "GET",
+    url,
+    body = null,
+    headers = null,
+    params = null,
+  }) => {
     try {
       setIsLoading(true);
       const response = await axios({
         method,
         url,
         data: body,
+        headers,
+        params,
       });
       setIsLoading(false);
       return response.data;
