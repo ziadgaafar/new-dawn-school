@@ -38,13 +38,15 @@ const Chats = () => {
     setMessages(data);
   };
 
-  const sendMessage = (m) => {
+  const sendMessage = async (m) => {
     if (m) {
-      setMessages((prev) => [
-        ...prev,
-        { sender: { _id: user._id }, content: m },
-      ]);
       setMessage("");
+      await sendRequest({
+        method: "POST",
+        url: "/message",
+        headers: { Authorization: `Bearer ${token}` },
+        body: { content: m, chatId: currentChat },
+      });
     }
   };
 
@@ -73,8 +75,8 @@ const Chats = () => {
             >
               {chats.map((chat) => (
                 <div
-                  className="d-flex justify-content-center align-items-center justify-content-lg-start"
                   key={chat._id}
+                  className="d-flex justify-content-center align-items-center justify-content-lg-start"
                   style={{
                     backgroundColor: currentChat === chat._id && "#D6EAF8",
                     cursor: "pointer",
@@ -98,7 +100,7 @@ const Chats = () => {
               className={`px-0 d-flex flex-column ${
                 !currentChat && "justify-content-center align-items-center"
               } bg-white align-items-start`}
-              style={{ height: "79vh" }}
+              style={{ height: "78.5vh" }}
             >
               {!currentChat ? (
                 <h1 className="display-5 text-center">Please Select a Chat.</h1>
@@ -110,34 +112,33 @@ const Chats = () => {
                   </h5>
                   <div
                     style={{
-                      height: "68.5vh",
+                      height: "67.2vh",
                       overflowY: "scroll",
                     }}
                     className="px-2"
                   >
                     {messages.map((message) => (
-                      <>
+                      <div key={message._id}>
                         {message.sender && (
                           <div
-                            key={message._id}
                             className={`d-flex ${
-                              message.sender._id === user._id &&
+                              message.sender.id === user._id &&
                               "flex-row-reverse ml-auto"
                             } align-items-center my-4`}
                           >
                             <img
                               className="mx-1"
-                              src={person}
-                              alt={message.sender._id}
+                              src={message.sender.image || person}
+                              alt={message.sender.id}
                               style={{ width: 30, height: 30 }}
                             />
                             <p
                               className={`lead rounded px-3 py-2 mb-0 ${
-                                message.sender._id === user._id && "text-white"
+                                message.sender.id === user._id && "text-white"
                               }`}
                               style={{
                                 backgroundColor:
-                                  message.sender._id === user._id
+                                  message.sender.id === user._id
                                     ? "#8472FC"
                                     : "#F0F0FB",
                               }}
@@ -146,7 +147,7 @@ const Chats = () => {
                             </p>
                           </div>
                         )}
-                      </>
+                      </div>
                     ))}
                     <div ref={bottomRef} />
                   </div>
