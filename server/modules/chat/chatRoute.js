@@ -7,7 +7,7 @@ const {
 
 chatRouter.use(auth());
 
-chatRouter.get("/api/chat", fetchChat);
-chatRouter.put("/api/chat/groupRemoved/:chatId", removeFromGroup);
+chatRouter.get("/", fetchChat);
+chatRouter.put("/groupRemoved/:chatId", removeFromGroup);
 
 module.exports = chatRouter;

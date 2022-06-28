@@ -33,10 +33,10 @@ app.use("/api/student", studentRoutes);
 app.use("/api/login", loginRoutes);
 app.use("/api/contactus", contactRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-app.use(courseRouter);
-app.use(chatRouter);
+app.use("/api/course", courseRouter);
+app.use("/api/chat", chatRouter);
 app.use(bookRouter);
-app.use(messageRouter);
+app.use("/api/message", messageRouter);
 app.use("/api/admin", adminRoutes)
 
 // Route not found

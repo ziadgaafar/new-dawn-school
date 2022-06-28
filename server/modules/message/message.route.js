@@ -7,7 +7,7 @@ const {
 
 messageRouter.use(auth());
 
-messageRouter.post("/api/message", sendMessgeController);
-messageRouter.get("/api/message/:chatId", allMessage);
+messageRouter.post("/", sendMessgeController);
+messageRouter.get("/:chatId", allMessage);
 
 module.exports = messageRouter;
