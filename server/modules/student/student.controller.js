@@ -101,13 +101,20 @@ const showStudentDash = (req, res, next) => {
 };
 
 const studentDegree=async (req,res)=>{
-  const {courseID}=req.body
+  try {
+    const {courseID}=req.body
   
-  const degreeOfStudent=await degreeModel.find({student:req.user._id ,course:courseID}).populate("student" ,"firstName lastName" ).populate("course" ,"subject" ).select("totalDegree")
+  const degreeOfStudent=await degreeModel.find({student:req.user._id ,course:courseID})
+  .populate("student" ,"firstName lastName" )
+  .populate("course" ,"subject" )
+  .select("totalDegree")
   if(!degreeOfStudent ==[]){
     res.json({message:"your degree",degreeOfStudent})
   } else {
-    res.status(400).json({ Error: "No Founded Courses" });
+    res.status(400).json({ Error: "no found degree" });
+  }
+  } catch (error) {
+    res.status(400).json({ Error: "Error" })
   }
   
 }
