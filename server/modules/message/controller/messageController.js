@@ -50,8 +50,9 @@ const sendMessgeController = async (req, res) => {
           content: content,
           chat: chatId,
         };
-        await messageModel.create(newMessage);
-        res.status(200);
+        const m = await messageModel.create(newMessage);
+        await m.populate("chat");
+        res.status(200).json(m);
       }
     }
   } catch (error) {
@@ -60,7 +61,9 @@ const sendMessgeController = async (req, res) => {
 };
 const allMessage = async (req, res, next) => {
   try {
-    const messages = await messageModel.find({ chat: req.params.chatId });
+    const messages = await messageModel
+      .find({ chat: req.params.chatId })
+      .populate("chat");
     res.json(messages);
   } catch (error) {
     return next(new HttpError("unexpected error", 500));

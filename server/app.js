@@ -3,8 +3,8 @@ const HttpError = require("./common/http-error");
 const env = require("dotenv").config();
 const mongoose = require("mongoose");
 const cors = require("cors");
-const path = require('path');
-const bodyParser = require('body-parser');
+const path = require("path");
+const bodyParser = require("body-parser");
 
 const app = express();
 app.use(cors());
@@ -25,17 +25,17 @@ const {
   contactRoutes,
   chatRouter,
   bookRouter,
-  messageRouter
+  messageRouter,
 } = require("./routes/allRoutes");
 app.use("/api/teacher", teacherRoutes);
 app.use("/api/student", studentRoutes);
 app.use("/api/login", loginRoutes);
 app.use("/api/contactus", contactRoutes);
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use(courseRouter)
-app.use(chatRouter)
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(courseRouter);
+app.use(chatRouter);
 app.use(bookRouter);
-app.use(messageRouter)
+app.use(messageRouter);
 
 // Route not found
 
@@ -50,15 +50,52 @@ app.use((error, req, res, next) => {
     .json({ message: error.message || "Something went wrong!" });
 });
 
-mongoose
-  .connect(process.env.CON_LINK, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => {
-    port = parseInt(process.env.PORT);
-    app.listen(port, () => {
-      console.log(`Running on port ${port} ....`);
+try {
+  const port = parseInt(process.env.PORT);
+  const server = app.listen(port, async () => {
+    await mongoose
+      .connect(process.env.CON_LINK, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      })
+      .then(() => console.log("DB Connected"));
+    console.log(`Running on port ${port} ....`);
+
+    const io = require("socket.io")(server, {
+      pingTimeout: 60000,
+      cors: {
+        origin: "http://localhost:3000",
+      },
     });
-  })
-  .catch((err) => console.log(err));
+
+    io.on("connection", (socket) => {
+      let user;
+      console.log("socket.io connected");
+
+      socket.on("setup", (userData) => {
+        socket.join(userData._id);
+        console.log(`${userData.firstName} ${userData.lastName} is connected`);
+        user = userData.firstName + " " + userData.lastName;
+        socket.emit("connected");
+      });
+
+      socket.on("joinChat", (chat) => {
+        socket.join(chat);
+        console.log(`${user} has joined chat ${chat}`);
+      });
+
+      socket.on("newMessage", (newMessage) => {
+        let chat = newMessage.chat;
+
+        if (!chat.users) return console.log("No users in this chat");
+
+        chat.users.forEach((userId) => {
+          if (userId === newMessage.sender.id) return;
+          socket.in(userId).emit("messageRecieved", newMessage);
+        });
+      });
+    });
+  });
+} catch (err) {
+  console.log(err);
+}

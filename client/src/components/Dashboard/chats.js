@@ -4,15 +4,22 @@ import { BiSend } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { useHttpClient } from "../../hooks/http-hook";
 import person from "../../images/person.png";
+import io from "socket.io-client";
+
+const ENDPOINT = "http://localhost:3001";
+// let socket, selectedChatCompare;
 
 const Chats = () => {
   const [chats, setChats] = useState(null);
   const [currentChat, setCurrentChat] = useState(null);
+  const [socket, setSocket] = useState(null);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
+  const [recievedMessage, setRecievedMessage] = useState(null);
   const bottomRef = useRef();
   const { sendRequest } = useHttpClient();
   const { token, user } = useSelector((state) => state.auth);
+  const [socketConnected, setSocketConnected] = useState(false);
 
   useLayoutEffect(() => {
     const fetch = async () => {
@@ -28,6 +35,40 @@ const Chats = () => {
     }
   }, [token]);
 
+  useEffect(() => {
+    if (!socket) {
+      setSocket(io(ENDPOINT));
+    }
+
+    if (socket) {
+      socket.emit("setup", user);
+      socket.on("connection", () => setSocketConnected(true));
+    }
+  }, [socket]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("messageRecieved", (newMessage) => {
+        if (!currentChat || currentChat !== newMessage.chat._id) {
+          // give notification
+        } else {
+          if (
+            recievedMessage === null ||
+            recievedMessage._id !== newMessage._id
+          ) {
+            setRecievedMessage(newMessage);
+          }
+        }
+      });
+    }
+  });
+
+  useEffect(() => {
+    if (recievedMessage !== null) {
+      setMessages((prev) => [...prev, recievedMessage]);
+    }
+  }, [recievedMessage]);
+
   const chatSelectHandler = async (id) => {
     setCurrentChat(id);
     const data = await sendRequest({
@@ -36,17 +77,20 @@ const Chats = () => {
       headers: { Authorization: `Bearer ${token}` },
     });
     setMessages(data);
+    socket.emit("joinChat", id);
   };
 
   const sendMessage = async (m) => {
     if (m) {
       setMessage("");
-      await sendRequest({
+      const message = await sendRequest({
         method: "POST",
         url: "/message",
         headers: { Authorization: `Bearer ${token}` },
         body: { content: m, chatId: currentChat },
       });
+      socket.emit("newMessage", message);
+      setMessages((prev) => [...prev, message]);
     }
   };
 
@@ -59,12 +103,7 @@ const Chats = () => {
     <>
       {chats && (
         <div className="pl-4">
-          <h1
-            onClick={() => setCurrentChat(null)}
-            className="dispaly-1 fw-bold text-center text-lg-left"
-          >
-            Chats
-          </h1>
+          <h1 className="dispaly-1 fw-bold text-center text-lg-left">Chats</h1>
           <Row className="w-100">
             <Col
               style={{ backgroundColor: "#F0F0FB" }}
