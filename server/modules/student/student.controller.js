@@ -69,14 +69,7 @@ const confirmRegister = async (req, res) => {
         { isConfirmed: true },
         { new: true }
       );
-      const message = `
-      <div style="text-align:center">
-        <h1>Email successfully confirmed!</h1>
-        <h2>Your password: ${updateStudent.password}</h2>
-      </div>
-      `;
       res.status(200).redirect(process.env.CLIENT_URL);
-      sendEmail(email, message);
     } else {
       return next(
         new HttpError("Email is already confirmed or not registed", 400)
@@ -99,6 +92,16 @@ const showCourses = async (req, res, next) => {
 const showStudentDash = (req, res, next) => {
   console.log("Working");
 };
+const showTimeTable = async(req,res,next) => {
+  const {userId} = req.user._id;
+  const found = await courseModel.findById(userId);
+  if (find) {
+      res.status(200).json({subject:found.subject, grade:found.grade, day:found.day, time:found.time})
+  } else {
+      res.status(400).json({Error:"Your time table is free"})
+  }
+}
+
 
 const studentDegree=async (req,res)=>{
   try {
@@ -124,5 +127,6 @@ module.exports = {
   confirmRegister,
   showStudentDash,
   showCourses,
-  studentDegree
+  studentDegree,
+  showTimeTable
 };

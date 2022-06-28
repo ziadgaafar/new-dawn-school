@@ -23,19 +23,6 @@ const fetchChat = async (req, res) => {
   }
 };
 
-// const addToGroup = async (req, res) => {
-//   try {
-//     const { chatId } = req.params;
-//     const { userId } = req.body;
-//     const updateChat = await chatModel
-//       .findByIdAndUpdate(chatId, { $push: { users: userId } }, { new: true })
-//       .populate("users", "-password")
-//       .populate("groupAdmin", "-password");
-//     res.status(200).send(updateChat);
-//   } catch (error) {
-//     return res.status(400).send({ messsage: "Error", error });
-//   }
-// };
 const removeFromGroup = async (req, res) => {
   try {
     const { chatId } = req.params;

@@ -46,6 +46,15 @@ const teacherVerification = async (req,res,next) => {
 const showTeachertDash = () =>{
     console.log("working teacher");
 }
+const showTimeTable = async(req,res,next) => {
+    const {userId} = req.user._id;
+    const found = await courseModel.findById(userId);
+    if (find) {
+        res.status(200).json({subject:found.subject, grade:found.grade, day:found.day, time:found.time})
+    } else {
+        res.status(400).json({Error:"Your time table is free"})
+    }
+}
 
 const showCourses = async(req,res,next) =>{
     const check = await courseModel.find({teacher:req.user._id});
@@ -144,4 +153,15 @@ const gettAllDegree=async(req,res)=>{
 
 
 
-module.exports = {teacherAddition, teacherVerification, uploadDegree,showTeachertDash,showCourses,uploadBook,uploadExam,uploadassign,gettAllDegree,updateDegree}
+module.exports = {teacherAddition, 
+    teacherVerification, 
+    uploadDegree,
+    showTeachertDash,
+    showCourses,
+    uploadBook,
+    uploadExam,
+    uploadassign,
+    gettAllDegree,
+    updateDegree,
+    showTimeTable
+}

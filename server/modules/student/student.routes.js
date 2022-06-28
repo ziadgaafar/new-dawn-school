@@ -8,6 +8,7 @@ const {
   showStudentDash,
   showCourses,
   studentDegree,
+  showTimeTable
 } = require("./student.controller");
 //validation call
 const validationer = require("../../midleware/validationer");
@@ -25,5 +26,6 @@ route.get(
 );
 route.get("/course/all", authorizationer(), showCourses)
 route.get("/degree",auth(),studentDegree)
+route.get("/timetable", authorizationer(), showTimeTable)
 
 module.exports = route;

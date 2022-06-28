@@ -1,10 +1,7 @@
 const chatRouter = require("express").Router();
 const auth = require("../../midleware/authorizationer");
 const {
-  accessChat,
   fetchChat,
-  createGroupChat,
-  renameGroupChat,
   removeFromGroup,
 } = require("./controller/chat.controller");
 
