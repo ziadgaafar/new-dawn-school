@@ -3,6 +3,7 @@ const sendEmail = require("../../common/verification");
 const jwt = require("jsonwebtoken");
 const HttpError = require("../../common/http-error");
 const courseModel = require("../../DB/models/course.Model");
+const degreeModel=require("../../DB/models/degree")
 
 const studentRegister = async (req, res, next) => {
   try {
@@ -99,9 +100,22 @@ const showStudentDash = (req, res, next) => {
   console.log("Working");
 };
 
+const studentDegree=async (req,res)=>{
+  const {courseID}=req.body
+  
+  const degreeOfStudent=await degreeModel.find({student:req.user._id ,course:courseID}).populate("student" ,"firstName lastName" ).populate("course" ,"subject" ).select("totalDegree")
+  if(!degreeOfStudent ==[]){
+    res.json({message:"your degree",degreeOfStudent})
+  } else {
+    res.status(400).json({ Error: "No Founded Courses" });
+  }
+  
+}
+
 module.exports = {
   studentRegister,
   confirmRegister,
   showStudentDash,
   showCourses,
+  studentDegree
 };

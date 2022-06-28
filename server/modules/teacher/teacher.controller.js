@@ -2,6 +2,7 @@ const teacherModel = require("../../DB/models/teacher.model");
 const courseModel=require("../../DB/models/course.Model")
 const sendEmail = require("../../common/verification");
 const jwt = require("jsonwebtoken");
+const degreeModel=require("../../DB/models/degree")
 
 const teacherAddition = async (req,res,next) => {
     try {
@@ -93,6 +94,20 @@ const uploadassign=async(req,res)=>{
     }
 }
 
+const uploadDegree=async (req,res)=>{
+    const {degreeExam,degreeAssign,degreeAttend,courseId,studentId}=req.body 
+
+const createDegree= await degreeModel.create({
+    degreeExam:degreeExam,
+    degreeAssign:degreeAssign,
+    degreeAttend:degreeAttend,
+    teacher:req.user._id,
+    course:courseId,
+    student:studentId,
+    totalDegree:degreeAssign+degreeAttend+degreeExam});
+res.json({message:"doneeeee",createDegree})
+}
 
 
-module.exports = {teacherAddition, teacherVerification, showTeachertDash,showCourses,uploadBook,uploadExam,uploadassign}
+
+module.exports = {teacherAddition, teacherVerification, uploadDegree,showTeachertDash,showCourses,uploadBook,uploadExam,uploadassign}

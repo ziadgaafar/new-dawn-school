@@ -1,10 +1,13 @@
 const route = require("express").Router();
+
+const auth=require("../../midleware/authorizationer")
 //controllers call
 const {
   studentRegister,
   confirmRegister,
   showStudentDash,
   showCourses,
+  studentDegree,
 } = require("./student.controller");
 //validation call
 const validationer = require("../../midleware/validationer");
@@ -21,5 +24,6 @@ route.get(
   showStudentDash
 );
 route.get("/course/all", authorizationer(), showCourses)
+route.get("/degree",auth(),studentDegree)
 
 module.exports = route;

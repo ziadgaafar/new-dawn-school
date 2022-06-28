@@ -9,7 +9,8 @@ const {
   uploadBook,
   uploadExam,
   uploadassign,
-  showCourses
+  showCourses,
+  uploadDegree
 } = require("./teacher.controller");
 const validateAdding = require("./teacher.validator");
 
@@ -20,5 +21,6 @@ route.get("/api/course/all", auth(), showCourses)
 route.post("/api/corse/uploadBook",auth(),uploadBook)
 route.post("/api/corse/uploadExam",auth(),uploadExam)
 route.post("/api/corse/uploadassign",auth(),uploadassign)
+route.post("/api/course/uploadDegree",auth(),uploadDegree)
 
 module.exports = route;
