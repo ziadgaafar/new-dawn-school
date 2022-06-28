@@ -36,6 +36,14 @@ const courseSchema=new mongoose.Schema({
     progress:{
         type:Number,
         default:10
+    },
+    day:{
+        type:String,
+        required: true
+    },
+    time:{
+        type:String,
+        required: true
     }
 })
 

@@ -14,7 +14,9 @@ const studentSchema = new mongoose.Schema({
   studentLevel: { type: String },
   submitQuestion: { type: String },
   isConfirmed: { type: Boolean, default: false },
+  isAccepted: {type: Boolean, default:false},
   role: { type: String, default: "student" },
+  image: { type: mongoose.Types.ObjectId, default:"", ref:"images"}
 });
 studentSchema.pre("save", function (next) {
   const gpass = generate.generate({

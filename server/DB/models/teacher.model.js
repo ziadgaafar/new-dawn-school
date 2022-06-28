@@ -11,7 +11,9 @@ const teacherSchema = new mongoose.Schema({
     courses:[{type:mongoose.Schema.Types.ObjectId,ref:"course"  }],
     salary:{type:String   },
     verified:{type:Boolean, default:false},
-    role:{type:String,default:"teacher"}
+    isAccepted: {type: Boolean, default:false},
+    role:{type:String,default:"teacher"},
+    image: { type: mongoose.Types.ObjectId, default:"", ref:"images"}
 })
 teacherSchema.pre("save", function(next){
     const gpass = generate.generate({
