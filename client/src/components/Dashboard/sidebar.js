@@ -5,7 +5,7 @@ import * as BiIcons from "react-icons/bi";
 import * as AiIcons from "react-icons/ai";
 
 import { SiderbarData } from "./sidebarData";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink as Link, useNavigate } from "react-router-dom";
 import Logo from "../NavBar/logo.png";
 import { FiLogOut } from "react-icons/fi";
 import { useDispatch } from "react-redux";
@@ -17,7 +17,6 @@ function Sidebar() {
   const navigate = useNavigate();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const toggle = () => setShow(!show);
 
   const logoutHandler = () => {
     localStorage.removeItem("token");
@@ -34,30 +33,33 @@ function Sidebar() {
 
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header>
-          <button className="slider-close-ptn" onClick={toggle}>
+          <button className="slider-close-ptn" onClick={handleClose}>
             <AiIcons.AiFillCloseCircle />
           </button>
         </Offcanvas.Header>
         <div>
-          <ul className="dashbord-nav-menu-items" onClick={toggle}>
+          <ul className="dashbord-nav-menu-items p-0">
             <li className="dashbord-Logo">
               <img src={Logo} alt="Logo" className="dashbord-logo-photo" />
             </li>
             {SiderbarData.map((item, index) => {
               return (
                 <li key={index} className={item.cName}>
-                  <Link to={item.path}>
+                  <Link
+                    onClick={handleClose}
+                    to={item.path}
+                    style={({ isActive }) =>
+                      isActive ? { color: "black" } : undefined
+                    }
+                  >
                     {item.icon}
                     <span>{item.title}</span>
                   </Link>
                 </li>
               );
             })}
-            <li
-              onClick={logoutHandler}
-              className="d-flex mt-5 justify-content-center dashbord-nav-text"
-            >
-              <Link to="#">
+            <li className="d-flex mt-4 justify-content-center dashbord-nav-text">
+              <Link to="#" onClick={logoutHandler}>
                 <FiLogOut />
                 <span>Logout</span>
               </Link>

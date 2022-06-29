@@ -5,6 +5,7 @@ import * as MdIcons from "react-icons/md";
 import * as ImIcons from "react-icons/im";
 import * as BsIcons from "react-icons/bs";
 import { AiFillSchedule } from "react-icons/ai";
+import { RiFileListFill } from "react-icons/ri";
 
 export const SiderbarData = [
   {
@@ -29,6 +30,12 @@ export const SiderbarData = [
     title: "Schedule",
     path: "/dashboard/schedule",
     icon: <AiFillSchedule />,
+    cName: "dashbord-nav-text",
+  },
+  {
+    title: "Grades",
+    path: "/dashboard/grades",
+    icon: <RiFileListFill />,
     cName: "dashbord-nav-text",
   },
   {

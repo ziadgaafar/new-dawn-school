@@ -1,30 +1,24 @@
 import React, { useState, useLayoutEffect } from "react";
-import { Container, Row, Col, Modal, Button } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Calendar from "react-calendar";
+import { useDispatch, useSelector } from "react-redux";
+import { AiFillStar } from "react-icons/ai";
+import { BsArrowRight } from "react-icons/bs";
+import { MdClose } from "react-icons/md";
 
 import Sidebar from "../Dashboard/sidebar";
 import Student from "../Dashboard/student";
 import Courses from "../Dashboard/courses";
 import Chats from "../Dashboard/chats";
 import Settings from "../Dashboard/settings";
+import Schedule from "../Dashboard/schedule";
+import Grades from "../Dashboard/grades";
+
 import person from "../../images/person.png";
-
-import { AiFillStar } from "react-icons/ai";
-import { BsArrowRight } from "react-icons/bs";
-import { MdClose } from "react-icons/md";
-
-import { useDispatch, useSelector } from "react-redux";
+import { LOGIN } from "../../redux/auth";
 
 import "react-calendar/dist/Calendar.css";
-import { LOGIN } from "../../redux/auth";
-import Schedule from "../Dashboard/schedule";
-
-const dummyuser = {
-  name: "Mohamed Ahmed",
-  grade: 10,
-  image: person,
-};
 
 const exams = [
   { name: "English Exam", date: new Date() },
@@ -67,6 +61,7 @@ const Dashboard = ({}) => {
         <Route path="/chats" element={<Chats user={user} />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/schedule" element={<Schedule />} />
+        <Route path="/grades" element={<Grades />} />
       </Routes>
 
       <Modal show={show} onHide={handleClose}>
@@ -81,11 +76,12 @@ const Dashboard = ({}) => {
             <img
               className="rounded-circle"
               src={user.image || person}
-              alt={user.firstName}
+              alt={user.firstName || user.firstname}
               style={{ width: 150, height: 150 }}
             />
             <h2 className="fw-bolder">
-              {user.firstName} {user.lastName}
+              {user.firstName || user.firstname}{" "}
+              {user.lastName || user.lastname}
             </h2>
             <div className="d-flex align-items-center justify-content-between">
               <AiFillStar
