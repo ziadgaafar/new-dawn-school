@@ -107,19 +107,6 @@ const uploadassign = async (req, res) => {
   }
 };
 
-const uploadBook = async (req, res) => {
-  const { grade, book } = req.body;
-  const check = await courseModel.find({ teacher: req.user._id, grade: grade });
-  console.log(check);
-  if (check) {
-    console.log(check._id);
-    await courseModel.updateOne({ _id: check[0]._id }, { book: book });
-    res.status(200).json({ Message: "Updated Successfully" });
-  } else {
-    res.status(400).json({ Error: "course not found" });
-  }
-};
-
 const gettAllDegree = async (req, res, next) => {
   try {
     const getDegree = await degreeModel
