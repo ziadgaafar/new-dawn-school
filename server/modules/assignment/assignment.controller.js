@@ -1,4 +1,4 @@
-const bookModel = require('../../DB/models/book.model');
+const assignmentModel = require('../../DB/models/assignment.model');
 
 const fileSizeFormatter = (bytes, decimal) => {
     if(bytes === 0){
@@ -11,11 +11,13 @@ const fileSizeFormatter = (bytes, decimal) => {
 
 }
 
-const bookUpload = async (req, res, next) => {
-    const courseId = req.body  
+const assignUpload = async (req, res, next) => {
+    const courseId = req.body
+    const studentId = req.user._id
     try{
-        const file = new bookModel({
+        const file = new assignmentModel({
             courseId: courseId,
+            studentId: studentId,
             fileName: req.file.originalname,
             filePath: req.file.path,
             fileType: req.file.mimetype,
@@ -27,24 +29,14 @@ const bookUpload = async (req, res, next) => {
     }
 }
 
-const getBook = async (req, res, next) => {
+const getAssign = async (req, res, next) => {
     const {courseId} = req.body
     try{
-        const files = await bookModel.findOne({courseId: courseId});
+        const files = await assignmentModel.find({courseId: courseId});
         res.status(200).json(files);
     }catch(error) {
         res.status(400).json(error.message);
     }
 }
 
-const downloadBook = async (req,res,next)=>{
-    const found = await bookModel.find({_id: req.params.bookId})
-    if (found) {
-        let x = __dirname + "../../../" + found[0].filePath
-        res.download(x)
-    } else {
-        res.status(400).json({Error:"book not found"})
-    }
-}
-
-module.exports = { bookUpload, getBook, downloadBook}
+module.exports = { assignUpload, getAssign}
