@@ -24,9 +24,6 @@ const courseSchema=new mongoose.Schema({
         ref:"student",
         required:true
     }],
-    book:{
-        type:String
-    },
     assignment:{
         type:String,
     },

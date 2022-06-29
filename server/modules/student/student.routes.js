@@ -1,6 +1,9 @@
 const route = require("express").Router();
 
 const auth=require("../../midleware/authorizationer")
+const {getBook, downloadBook} = require('../book/book.controller');
+const { assignUpload} = require("../assignment/assignment.controller")
+const {upload} = require("../../common/FileSystem")
 //controllers call
 const {
   studentRegister,
@@ -8,7 +11,9 @@ const {
   showStudentDash,
   showCourses,
   studentDegree,
-  showTimeTable
+  showTimeTable,
+  getExam,
+  getCourseAssignment
 } = require("./student.controller");
 //validation call
 const validationer = require("../../midleware/validationer");
@@ -27,5 +32,10 @@ route.get(
 route.get("/course/all", authorizationer(), showCourses)
 route.get("/degree",auth(),studentDegree)
 route.get("/timetable", authorizationer(), showTimeTable)
+route.get('/getBook', getBook);
+route.post("/uploadAssignment", auth(), upload.single('file'), assignUpload)
+route.get("/downloadBook/:bookId", downloadBook)
+route.get("/getExam", getExam)
+route.get("/getCourseAssignment", getCourseAssignment)
 
 module.exports = route;

@@ -125,6 +125,25 @@ const studentDegree = async (req, res, next) => {
   }
 };
 
+const getExam = async (req, res) =>{
+  const {courseId} = req.body
+  const found = await courseModel.findOne({_id:courseId})
+  if (found) {
+    res.status(200).json(found.exam)
+  } else {
+    res.status(400).json({Error:"course not existed"})
+  }
+}
+const getCourseAssignment = async (req, res) =>{
+  const {courseId} = req.body
+  const found = await courseModel.findOne({_id:courseId})
+  if (found) {
+    res.status(200).json(found.assignment)
+  } else {
+    res.status(400).json({Error:"course not existed"})
+  }
+}
+
 module.exports = {
   studentRegister,
   confirmRegister,
@@ -132,4 +151,6 @@ module.exports = {
   showCourses,
   studentDegree,
   showTimeTable,
+  getExam,
+  getCourseAssignment
 };
