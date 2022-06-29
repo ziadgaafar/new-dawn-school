@@ -107,22 +107,21 @@ const showTimeTable = async (req, res, next) => {
   }
 };
 
-const studentDegree = async (req, res) => {
+const studentDegree = async (req, res, next) => {
   try {
-    const { courseID } = req.body;
-
     const degreeOfStudent = await degreeModel
-      .find({ student: req.user._id, course: courseID })
+      .find({ student: req.user._id })
       .populate("student", "firstName lastName")
       .populate("course", "subject")
-      .populate("teacher", "firstname lastname")
-    if (!degreeOfStudent == []) {
-      res.json({ message: "your degree", degreeOfStudent });
+      .populate("teacher", "firstname lastname");
+    if (degreeOfStudent && degreeOfStudent.length > 0) {
+      res.json(degreeOfStudent);
     } else {
-      res.status(400).json({ Error: "no found degree" });
+      return next(new HttpError("Degrees not found!", 404));
     }
   } catch (error) {
-    res.status(400).json({ Error: "Error" });
+    console.log(error);
+    return next(new HttpError("Unexpected Error", 500));
   }
 };
 

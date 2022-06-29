@@ -12,19 +12,30 @@ const {
   showCourses,
   gettAllDegree,
   updateDegree,
-  showTimeTable
+  showTimeTable,
 } = require("./teacher.controller");
 const validateAdding = require("./teacher.validator");
+const HttpError = require("../../common/http-error");
 
 route.post("/addTeacher", validationer(validateAdding), teacherAddition);
 route.get("/confirm/:token", teacherVerification);
 route.get("/dashboard", auth(endPoints.teacherDash), showTeachertDash);
-route.get("/api/course/all", auth(), showCourses)
-route.post("/api/corse/uploadBook",auth(),uploadBook)
-route.post("/api/corse/uploadExam",auth(),uploadExam)
-route.post("/api/corse/uploadassign",auth(),uploadassign)
-route.get("/api/course/gettAllDegree",auth(),gettAllDegree)
-route.put("/api/course/updateDegree",auth(),updateDegree)
-route.get("/timetable", auth(), showTimeTable)
+route.get("/api/course/all", auth(), showCourses);
+
+route.use(auth());
+
+route.use((req, res, next) => {
+  if (req.user.role !== "teacher") {
+    return next(new HttpError("Unauthorized", 401));
+  }
+  next();
+});
+
+route.post("/uploadBook", uploadBook);
+route.post("/uploadExam", uploadExam);
+route.post("/uploadassign", uploadassign);
+route.get("/getAllDegree", gettAllDegree);
+route.put("/updateDegree", updateDegree);
+route.get("/timetable", showTimeTable);
 
 module.exports = route;
