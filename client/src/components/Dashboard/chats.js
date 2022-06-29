@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
-import { Row, Col, Form } from "react-bootstrap";
+import { Row, Col, Form, Spinner } from "react-bootstrap";
 import { BiSend } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { useHttpClient } from "../../hooks/http-hook";
@@ -7,7 +7,6 @@ import person from "../../images/person.png";
 import io from "socket.io-client";
 
 const ENDPOINT = "http://localhost:3001";
-// let socket, selectedChatCompare;
 
 const Chats = () => {
   const [chats, setChats] = useState(null);
@@ -18,8 +17,8 @@ const Chats = () => {
   const [recievedMessage, setRecievedMessage] = useState(null);
   const bottomRef = useRef();
   const { sendRequest } = useHttpClient();
+  const selectChat = useHttpClient();
   const { token, user } = useSelector((state) => state.auth);
-  const [socketConnected, setSocketConnected] = useState(false);
 
   useLayoutEffect(() => {
     const fetch = async () => {
@@ -42,7 +41,6 @@ const Chats = () => {
 
     if (socket) {
       socket.emit("setup", user);
-      socket.on("connection", () => setSocketConnected(true));
     }
   }, [socket]);
 
@@ -71,7 +69,7 @@ const Chats = () => {
 
   const chatSelectHandler = async (id) => {
     setCurrentChat(id);
-    const data = await sendRequest({
+    const data = await selectChat.sendRequest({
       method: "GET",
       url: `/message/${id}`,
       headers: { Authorization: `Bearer ${token}` },
@@ -101,7 +99,7 @@ const Chats = () => {
 
   return (
     <>
-      {chats && (
+      {chats ? (
         <div className="pl-4">
           <h1 className="dispaly-1 fw-bold text-center text-lg-left">Chats</h1>
           <Row className="w-100">
@@ -144,74 +142,93 @@ const Chats = () => {
               {!currentChat ? (
                 <h1 className="display-5 text-center">Please Select a Chat.</h1>
               ) : (
-                <div className="w-100">
-                  <h5 className="fw-bolder border-bottom text-center py-1">
-                    {chats.find((chat) => chat._id === currentChat).chatName}{" "}
-                    Course Chat
-                  </h5>
-                  <div
-                    style={{
-                      height: "67.2vh",
-                      overflowY: "scroll",
-                    }}
-                    className="px-2"
-                  >
-                    {messages.map((message) => (
-                      <div key={message._id}>
-                        {message.sender && (
-                          <div
-                            className={`d-flex ${
-                              message.sender.id === user._id &&
-                              "flex-row-reverse ml-auto"
-                            } align-items-center my-4`}
-                          >
-                            <img
-                              className="mx-1"
-                              src={message.sender.image || person}
-                              alt={message.sender.id}
-                              style={{ width: 30, height: 30 }}
-                            />
-                            <p
-                              className={`lead rounded px-3 py-2 mb-0 ${
-                                message.sender.id === user._id && "text-white"
-                              }`}
-                              style={{
-                                backgroundColor:
-                                  message.sender.id === user._id
-                                    ? "#8472FC"
-                                    : "#F0F0FB",
-                              }}
-                            >
-                              {message.content}
-                            </p>
+                <>
+                  {selectChat.isLoading ? (
+                    <div
+                      style={{ height: "79vh" }}
+                      className="w-100 d-flex justify-content-center align-items-center"
+                    >
+                      <Spinner animation="border" />
+                    </div>
+                  ) : (
+                    <div className="w-100">
+                      <h5 className="fw-bolder border-bottom text-center py-1">
+                        {
+                          chats.find((chat) => chat._id === currentChat)
+                            .chatName
+                        }{" "}
+                        Course Chat
+                      </h5>
+                      <div
+                        style={{
+                          height: "67.2vh",
+                          overflowY: "scroll",
+                        }}
+                        className="px-2"
+                      >
+                        {messages.map((message) => (
+                          <div key={message._id}>
+                            {message.sender && (
+                              <div
+                                className={`d-flex ${
+                                  message.sender.id === user._id &&
+                                  "flex-row-reverse ml-auto"
+                                } align-items-center my-4`}
+                              >
+                                <img
+                                  className="mx-1"
+                                  src={message.sender.image || person}
+                                  alt={message.sender.id}
+                                  style={{ width: 30, height: 30 }}
+                                />
+                                <p
+                                  className={`lead rounded px-3 py-2 mb-0 ${
+                                    message.sender.id === user._id &&
+                                    "text-white"
+                                  }`}
+                                  style={{
+                                    backgroundColor:
+                                      message.sender.id === user._id
+                                        ? "#8472FC"
+                                        : "#F0F0FB",
+                                  }}
+                                >
+                                  {message.content}
+                                </p>
+                              </div>
+                            )}
                           </div>
-                        )}
+                        ))}
+                        <div ref={bottomRef} />
                       </div>
-                    ))}
-                    <div ref={bottomRef} />
-                  </div>
-                  <form
-                    className="d-flex"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      sendMessage(message);
-                    }}
-                  >
-                    <Form.Control
-                      placeholder="Enter your message"
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                    />
-                    <BiSend
-                      size="40"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => sendMessage(message)}
-                    />
-                  </form>
-                </div>
+                      <form
+                        className="d-flex"
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          sendMessage(message);
+                        }}
+                      >
+                        <Form.Control
+                          placeholder="Enter your message"
+                          value={message}
+                          onChange={(e) => setMessage(e.target.value)}
+                        />
+                        <BiSend
+                          size="40"
+                          style={{ cursor: "pointer" }}
+                          onClick={() => sendMessage(message)}
+                        />
+                      </form>
+                    </div>
+                  )}
+                </>
               )}
             </Col>
           </Row>
+        </div>
+      ) : (
+        <div className="p-5 d-flex justify-content-center">
+          <Spinner animation="border" />
         </div>
       )}
     </>
