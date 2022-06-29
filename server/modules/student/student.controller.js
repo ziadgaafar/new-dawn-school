@@ -93,19 +93,17 @@ const showStudentDash = (req, res, next) => {
   console.log("Working");
 };
 const showTimeTable = async (req, res, next) => {
-  const { userId } = req.user._id;
-  const found = await courseModel.findById(userId);
+  const found = await courseModel.find({ student: req.user._id });
+  const table = found.map((course) => ({
+    subject: course.subject,
+    grade: course.grade,
+    day: course.day,
+    time: course.time,
+  }));
   if (found) {
-    res
-      .status(200)
-      .json({
-        subject: found.subject,
-        grade: found.grade,
-        day: found.day,
-        time: found.time,
-      });
+    res.json(table);
   } else {
-    res.status(400).json({ Error: "Your time table is free" });
+    return next(new HttpError("Your time table is free", 404));
   }
 };
 
