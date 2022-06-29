@@ -3,7 +3,7 @@ const sendEmail = require("../../common/verification");
 const jwt = require("jsonwebtoken");
 const HttpError = require("../../common/http-error");
 const courseModel = require("../../DB/models/course.Model");
-const degreeModel=require("../../DB/models/degree")
+const degreeModel = require("../../DB/models/degree");
 
 const studentRegister = async (req, res, next) => {
   try {
@@ -92,35 +92,41 @@ const showCourses = async (req, res, next) => {
 const showStudentDash = (req, res, next) => {
   console.log("Working");
 };
-const showTimeTable = async(req,res,next) => {
-  const {userId} = req.user._id;
+const showTimeTable = async (req, res, next) => {
+  const { userId } = req.user._id;
   const found = await courseModel.findById(userId);
-  if (find) {
-      res.status(200).json({subject:found.subject, grade:found.grade, day:found.day, time:found.time})
+  if (found) {
+    res
+      .status(200)
+      .json({
+        subject: found.subject,
+        grade: found.grade,
+        day: found.day,
+        time: found.time,
+      });
   } else {
-      res.status(400).json({Error:"Your time table is free"})
+    res.status(400).json({ Error: "Your time table is free" });
   }
-}
+};
 
-
-const studentDegree=async (req,res)=>{
+const studentDegree = async (req, res) => {
   try {
-    const {courseID}=req.body
-  
-  const degreeOfStudent=await degreeModel.find({student:req.user._id ,course:courseID})
-  .populate("student" ,"firstName lastName" )
-  .populate("course" ,"subject" )
-  .select("totalDegree")
-  if(!degreeOfStudent ==[]){
-    res.json({message:"your degree",degreeOfStudent})
-  } else {
-    res.status(400).json({ Error: "no found degree" });
-  }
+    const { courseID } = req.body;
+
+    const degreeOfStudent = await degreeModel
+      .find({ student: req.user._id, course: courseID })
+      .populate("student", "firstName lastName")
+      .populate("course", "subject")
+      .select("totalDegree");
+    if (!degreeOfStudent == []) {
+      res.json({ message: "your degree", degreeOfStudent });
+    } else {
+      res.status(400).json({ Error: "no found degree" });
+    }
   } catch (error) {
-    res.status(400).json({ Error: "Error" })
+    res.status(400).json({ Error: "Error" });
   }
-  
-}
+};
 
 module.exports = {
   studentRegister,
@@ -128,5 +134,5 @@ module.exports = {
   showStudentDash,
   showCourses,
   studentDegree,
-  showTimeTable
+  showTimeTable,
 };
