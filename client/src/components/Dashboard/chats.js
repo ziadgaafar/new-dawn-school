@@ -1,5 +1,13 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
-import { Row, Col, Form, Spinner } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Form,
+  Spinner,
+  OverlayTrigger,
+  Button,
+  Tooltip,
+} from "react-bootstrap";
 import { BiSend } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { useHttpClient } from "../../hooks/http-hook";
@@ -68,6 +76,7 @@ const Chats = () => {
   }, [recievedMessage]);
 
   const chatSelectHandler = async (id) => {
+    if (id === currentChat) return;
     setCurrentChat(id);
     const data = await selectChat.sendRequest({
       method: "GET",
@@ -104,7 +113,11 @@ const Chats = () => {
           <h1 className="dispaly-1 fw-bold text-center text-lg-left">Chats</h1>
           <Row className="w-100">
             <Col
-              style={{ backgroundColor: "#F0F0FB" }}
+              style={{
+                backgroundColor: "#F0F0FB",
+                height: "78.5vh",
+                overflowY: "scroll",
+              }}
               xs={2}
               lg={4}
               xl={3}
@@ -175,12 +188,27 @@ const Chats = () => {
                                   "flex-row-reverse ml-auto"
                                 } align-items-center my-4`}
                               >
-                                <img
-                                  className="mx-1"
-                                  src={message.sender.image || person}
-                                  alt={message.sender.id}
-                                  style={{ width: 30, height: 30 }}
-                                />
+                                <OverlayTrigger
+                                  placement="top"
+                                  overlay={
+                                    <Tooltip>
+                                      <div>{message.sender.name}</div>
+                                      <div>
+                                        {new Date(
+                                          message.createdAt
+                                        ).toLocaleString()}
+                                      </div>
+                                    </Tooltip>
+                                  }
+                                >
+                                  <img
+                                    className="mx-1"
+                                    src={message.sender.image || person}
+                                    alt={message.sender.id}
+                                    style={{ width: 30, height: 30 }}
+                                  />
+                                </OverlayTrigger>
+
                                 <p
                                   className={`lead rounded px-3 py-2 mb-0 ${
                                     message.sender.id === user._id &&
