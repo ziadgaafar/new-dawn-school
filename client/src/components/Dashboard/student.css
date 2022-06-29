@@ -1,0 +1,78 @@
+.searsh-box {
+    box-shadow: 3px 3px rgba(148, 148, 148, 0.295);
+    border-radius: 20px;
+}
+
+.welcome-div {
+    background-color: #9fc9e98e;
+    padding: 20px;
+    border-radius: 30px;
+    height: 160px;
+}
+
+.week-but {
+    border: 0px;
+    padding: 5px;
+    margin: 10px;
+}
+
+.arrow {
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    margin: 2px;
+}
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+.student-infos {
+    border-radius: 30px;
+}
+
+.square {
+    height: 10px;
+    width: 10px;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+.courses-attend {
+    background-color: white;
+    box-shadow: 2px 2px 2px 2px rgba(148, 148, 148, 0.151);
+}
+
+.circle {
+    height: 30px;
+    width: 30px;
+    border-radius: 50px;
+    display: inline-block;
+}
+
+
+.arrow {
+    color: rgb(24, 184, 24);
+}
+
+
+
+
+
+@media only screen and (max-width: 460px) {
+    .student-header {
+        font-size: 18px !important;
+    }
+
+    .student-p {
+        font-size: 13px !important;
+    }
+
+    .girl-image {
+        width: 100px;
+
+    }
+
+}
