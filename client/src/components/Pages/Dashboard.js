@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "react-calendar/dist/Calendar.css";
 import { LOGIN } from "../../redux/auth";
+import Schedule from "../Dashboard/schedule";
 
 const dummyuser = {
   name: "Mohamed Ahmed",
@@ -65,6 +66,7 @@ const Dashboard = ({}) => {
         <Route path="/courses" element={<Courses />} />
         <Route path="/chats" element={<Chats user={user} />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/schedule" element={<Schedule />} />
       </Routes>
 
       <Modal show={show} onHide={handleClose}>
