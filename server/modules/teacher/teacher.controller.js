@@ -103,28 +103,12 @@ const uploadassign=async(req,res)=>{
     }
 }
 
-const uploadDegree=async (req,res)=>{
- try {
-    const {degreeExam,degreeAssign,degreeAttend,courseId,studentId}=req.body 
-
-    const createDegree= await degreeModel.create({
-        degreeExam:degreeExam,
-        degreeAssign:degreeAssign,
-        degreeAttend:degreeAttend,
-        teacher:req.user._id,
-        course:courseId,
-        student:studentId,
-        totalDegree:degreeAssign+degreeAttend+degreeExam});
-    res.json({message:"Added degree successfully",createDegree})
- } catch (error) {
-    res.status(400).json({message:"Error"})
- }
-}
-
 const gettAllDegree=async(req,res)=>{
   try {
     const{course}=req.body
     const getDegree=await degreeModel.find({course:course})
+    .populate("course", "subject")
+    .populate("student", "firstName lastName")
     if (getDegree){
         res.status(200).json({message:"done",getDegree})
     }else{
@@ -155,7 +139,6 @@ const gettAllDegree=async(req,res)=>{
 
 module.exports = {teacherAddition, 
     teacherVerification, 
-    uploadDegree,
     showTeachertDash,
     showCourses,
     uploadBook,

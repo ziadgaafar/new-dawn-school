@@ -115,7 +115,7 @@ const studentDegree = async (req, res) => {
       .find({ student: req.user._id, course: courseID })
       .populate("student", "firstName lastName")
       .populate("course", "subject")
-      .select("totalDegree");
+      .populate("teacher", "firstname lastname")
     if (!degreeOfStudent == []) {
       res.json({ message: "your degree", degreeOfStudent });
     } else {

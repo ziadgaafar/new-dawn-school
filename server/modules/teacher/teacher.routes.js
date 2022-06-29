@@ -10,7 +10,6 @@ const {
   uploadExam,
   uploadassign,
   showCourses,
-  uploadDegree,
   gettAllDegree,
   updateDegree,
   showTimeTable
@@ -24,7 +23,6 @@ route.get("/api/course/all", auth(), showCourses)
 route.post("/api/corse/uploadBook",auth(),uploadBook)
 route.post("/api/corse/uploadExam",auth(),uploadExam)
 route.post("/api/corse/uploadassign",auth(),uploadassign)
-route.post("/api/course/uploadDegree",auth(),uploadDegree)
 route.get("/api/course/gettAllDegree",auth(),gettAllDegree)
 route.put("/api/course/updateDegree",auth(),updateDegree)
 route.get("/timetable", auth(), showTimeTable)

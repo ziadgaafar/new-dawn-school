@@ -8,7 +8,6 @@ student:{type:mongoose.Schema.Types.ObjectId,ref:"student"},
 course:{type:mongoose.Schema.Types.ObjectId,ref:"course"},
 teacher:{type:mongoose.Schema.Types.ObjectId,ref:"teacher"},
 totalDegree:{type:Number,default:0},
-
 })
 
 const degreeModel=mongoose.model("degree",degreeSchema)
