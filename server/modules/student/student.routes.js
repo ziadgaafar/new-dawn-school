@@ -13,7 +13,8 @@ const {
   studentDegree,
   showTimeTable,
   getExam,
-  getCourseAssignment
+  getCourseAssignment,
+  
 } = require("./student.controller");
 //validation call
 const validationer = require("../../midleware/validationer");
@@ -21,6 +22,8 @@ const validateSignup = require("./student.validator");
 //authorization call
 const authorizationer = require("../../midleware/authorizationer");
 const endPoints = require("../../common/endPoints");
+const changePassword = require("../../common/changePassword");
+const imageUpload = require("../../common/changeImage");
 
 route.post("/register", validationer(validateSignup), studentRegister);
 route.get("/confirmation/:token", confirmRegister);
@@ -36,6 +39,8 @@ route.get('/getBook', getBook);
 route.post("/uploadAssignment", auth(), upload.single('file'), assignUpload)
 route.get("/downloadBook/:bookId", downloadBook)
 route.get("/getExam", getExam)
-route.get("/getCourseAssignment", getCourseAssignment)
+route.get("/getCourseAssignment", getCourseAssignment) 
+route.put("/changePassword",auth(),changePassword)
+route.post("/imageUpload",auth(),upload.single('file'),imageUpload)  
 
 module.exports = route;

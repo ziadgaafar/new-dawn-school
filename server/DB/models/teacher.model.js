@@ -13,7 +13,7 @@ const teacherSchema = new mongoose.Schema({
     verified:{type:Boolean, default:false},
     isAccepted: {type: Boolean, default:false},
     role:{type:String,default:"teacher"},
-    image: { type: mongoose.Types.ObjectId, default:"", ref:"images"}
+    image: { type: mongoose.Types.ObjectId,ref:"image"}
 })
 teacherSchema.pre("save", function(next){
     const gpass = generate.generate({

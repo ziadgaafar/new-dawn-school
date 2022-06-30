@@ -5,6 +5,8 @@ const validationer = require("../../midleware/validationer");
 const { upload } = require("../../common/FileSystem");
 const { bookUpload, getBook } = require("../book/book.controller");
 const { getAssign } = require("../assignment/assignment.controller");
+
+
 const {
   teacherAddition,
   teacherVerification,
@@ -18,6 +20,8 @@ const {
 } = require("./teacher.controller");
 const validateAdding = require("./teacher.validator");
 const HttpError = require("../../common/http-error");
+const changePassword = require("../../common/changePassword");
+const imageUpload = require("../../common/changeImage");
 
 route.post("/addTeacher", validationer(validateAdding), teacherAddition);
 route.get("/confirm/:token", teacherVerification);
@@ -41,5 +45,8 @@ route.get("/timetable", showTimeTable);
 route.post("/uploadBook", upload.single("file"), bookUpload);
 route.get("/getBook", getBook);
 route.get("/getAssignments", getAssign);
+route.put("/changePassword",auth(),changePassword) 
+route.post("/imageUpload",auth(),upload.single('file'),imageUpload) 
+
 
 module.exports = route;

@@ -16,7 +16,11 @@ const studentSchema = new mongoose.Schema({
   isConfirmed: { type: Boolean, default: false },
   isAccepted: {type: Boolean, default:false},
   role: { type: String, default: "student" },
-  image: { type: mongoose.Types.ObjectId, default:"", ref:"images"}
+  image: { type: mongoose.Types.ObjectId, ref:"image"},
+  resetLink:{
+    data:String,
+    default:""
+  }
 });
 studentSchema.pre("save", function (next) {
   const gpass = generate.generate({

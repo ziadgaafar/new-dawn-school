@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const HttpError = require("../../common/http-error");
 const courseModel = require("../../DB/models/course.Model");
 const degreeModel = require("../../DB/models/degree");
+const teacherModel = require("../../DB/models/teacher.model");
 
 const studentRegister = async (req, res, next) => {
   try {
@@ -80,6 +81,7 @@ const confirmRegister = async (req, res) => {
   }
 };
 
+
 const showCourses = async (req, res, next) => {
   const check = await courseModel.find({ student: req.user._id });
   if (!check == []) {
@@ -152,5 +154,6 @@ module.exports = {
   studentDegree,
   showTimeTable,
   getExam,
-  getCourseAssignment
-};
+  getCourseAssignment,
+  
+}
