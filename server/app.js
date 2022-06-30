@@ -40,7 +40,7 @@ app.use("/api/admin", adminRoutes);
 // Route not found
 
 app.use((req, res, next) => {
-  //return next(new HttpError("Route not Found", 404));
+  return next(new HttpError("Route not Found", 404));
 });
 
 // //Special Error Handler Middleware
