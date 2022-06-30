@@ -23,7 +23,7 @@ const validateSignup = require("./student.validator");
 const authorizationer = require("../../midleware/authorizationer");
 const endPoints = require("../../common/endPoints");
 const changePassword = require("../../common/changePassword");
-const imageUpload = require("../../common/changeImage");
+const {imageUpload} = require("../../common/changeImage");
 
 route.post("/register", validationer(validateSignup), studentRegister);
 route.get("/confirmation/:token", confirmRegister);

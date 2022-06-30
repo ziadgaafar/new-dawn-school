@@ -26,6 +26,7 @@ const {
   chatRouter,
   messageRouter,
   adminRoutes,
+  imageRoutes,
 } = require("./routes/allRoutes");
 app.use("/api/teacher", teacherRoutes);
 app.use("/api/student", studentRoutes);
@@ -36,6 +37,7 @@ app.use("/api/course", courseRouter);
 app.use("/api/chat", chatRouter);
 app.use("/api/message", messageRouter);
 app.use("/api/admin", adminRoutes);
+app.use("/api/images", imageRoutes);
 
 // Route not found
 

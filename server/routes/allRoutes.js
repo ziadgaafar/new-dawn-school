@@ -6,6 +6,8 @@ const chatRouter=require("../modules/chat/chatRoute")
 const courseRouter = require("../modules/course/course.routes");
 const messageRouter=require("../modules/message/message.route")
 const adminRoutes = require("../modules/admin/admin.routes");
+const imageRoutes = require("../modules/image/image.route");
+
 
 module.exports = {courseRouter,
     teacherRoutes, 
@@ -14,5 +16,6 @@ module.exports = {courseRouter,
     contactRoutes,
     chatRouter, 
     messageRouter,
-    adminRoutes
+    adminRoutes,
+    imageRoutes
 };

@@ -14,45 +14,45 @@ const fileSizeFormatter = (bytes, decimal) => {
     return parseFloat((bytes / Math.pow(1000, index)).toFixed(dm)) + ' ' + sizes[index];
 }
 
-const downloadimage = async function (res,ImageId){
-    const found = await imageModel.find({_id:ImageId})
-    if (found) {
-        let x = __dirname + "../../" + found[0].filePath
-
-        res.download(x)
+const displayimage = async  (req,res)=>{
+    const foundStudent = await studentModel.find({_id:req.user._id})
+    const foundTeacher = await teacherModel.find({_id:req.user._id})
+    
+    if (!foundStudent && !foundTeacher) {
+        res.status(400).json({Error:"not found user"})
     } else {
-        res.status(400).json({Error:"iamge not found"})
+        if(foundStudent.length>0){
+            const image=await imageModel.findOne({userId:req.user._id})
+            res.status(200).json({message:"done",image})
+        }else if(foundTeacher.length>0){
+            const image=await imageModel.findOne({userId:req.user._id})
+            res.status(200).json({message:"done",image})
+        }
     }
 }
 
 
-let user;
 const imageUpload = async (req, res, next) => {
     try{
         const teacher= teacherModel.findOne({_id:req.user._id})
-        if(teacher){
-            user="teacherId"
-        }else{
-            user="studentId"
-        }
+       
         const image =await new imageModel({
-            user: req.user._id,
+            userId: req.user._id,
             fileName: req.file.originalname,
             filePath: req.file.path,
             fileType: req.file.mimetype,
             fileSize: fileSizeFormatter(req.file.size, 2) // 0.00
         }).save();
-        downloadimage(res,image._id)
         if(teacher){
             await teacherModel.findByIdAndUpdate({_id:req.user._id},{image:image._id})
         }else{
             await studentModel.findByIdAndUpdate({_id:req.user._id},{image:image._id})
-
         }
+        res.status(200).json({message:"updated successfully",image})
     }catch(error) {
         res.status(400).send(error.message);
     }
 }
 
 
-module.exports=imageUpload
+module.exports={imageUpload,displayimage}

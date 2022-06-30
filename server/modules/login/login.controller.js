@@ -2,6 +2,23 @@ const studentModel = require("../../DB/models/student.model");
 const teacherModel = require("../../DB/models/teacher.model");
 const jwt = require("jsonwebtoken");
 const HttpError = require("../../common/http-error");
+const imageModel = require("../../DB/models/image.model");
+
+
+
+const displayimage = async function (userId){
+  const foundStudent = await studentModel.find({_id:userId})
+  const foundTeacher = await teacherModel.find({_id:userId})
+
+      if(foundStudent){
+      const image=await imageModel.findOne({studentId:userId})
+          return image
+      }else{
+          const image=await imageModel.findOne({teacherId:userId})
+          return image
+      }
+  
+}
 
 const userLogin = async (req, res, next) => {
   try {
@@ -15,10 +32,12 @@ const userLogin = async (req, res, next) => {
         return next(new HttpError("Please confirm your E-mail first!", 400));
       }
       const token = jwt.sign({ id: checkStudent._id }, process.env.TOKEN_KEY);
+      const studentImage=displayimage(checkStudent._id)
       res.json({
         message: "Signed in successfully",
         token,
         user: checkStudent,
+        studentImage
       });
     } else {
       const checkTeacher = await teacherModel.findOne({ email });
@@ -31,10 +50,12 @@ const userLogin = async (req, res, next) => {
             { id: checkTeacher._id },
             process.env.TOKEN_KEY
           );
+          const teacherImage=displayimage(checkTeacher._id)
           res.json({
             message: "Completed",
             token,
             user: checkTeacher,
+            teacherImage
           });
         } else {
           return next(

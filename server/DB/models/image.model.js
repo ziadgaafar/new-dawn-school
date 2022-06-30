@@ -17,14 +17,10 @@ const imageSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    studentId:{
-        type: mongoose.Types.ObjectId,
-        ref: "student"
-    },
-    teacherId:{
-        type: mongoose.Types.ObjectId,
-        ref: "teacher"
+    userId:{
+        type: mongoose.Types.ObjectId
     }
+   
 }, {timestamps: true});
 
 const imageModel = mongoose.model('image', imageSchema);

@@ -21,7 +21,7 @@ const {
 const validateAdding = require("./teacher.validator");
 const HttpError = require("../../common/http-error");
 const changePassword = require("../../common/changePassword");
-const imageUpload = require("../../common/changeImage");
+const{ imageUpload} = require("../../common/changeImage");
 
 route.post("/addTeacher", validationer(validateAdding), teacherAddition);
 route.get("/confirm/:token", teacherVerification);
