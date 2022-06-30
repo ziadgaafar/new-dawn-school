@@ -25,7 +25,7 @@ const {
   contactRoutes,
   chatRouter,
   messageRouter,
-  adminRoutes
+  adminRoutes,
 } = require("./routes/allRoutes");
 app.use("/api/teacher", teacherRoutes);
 app.use("/api/student", studentRoutes);
@@ -35,20 +35,20 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/course", courseRouter);
 app.use("/api/chat", chatRouter);
 app.use("/api/message", messageRouter);
-app.use("/api/admin", adminRoutes)
+app.use("/api/admin", adminRoutes);
 
 // Route not found
 
-// app.use((req, res, next) => {
-//   //return next(new HttpError("Route not Found", 404));
-// });
+app.use((req, res, next) => {
+  //return next(new HttpError("Route not Found", 404));
+});
 
 // //Special Error Handler Middleware
-// app.use((error, req, res, next) => {
-//   res
-//     .status(error.code || 500)
-//     .json({ message: error.message || "Something went wrong!" });
-// });
+app.use((error, req, res, next) => {
+  res
+    .status(error.code || 500)
+    .json({ message: error.message || "Something went wrong!" });
+});
 
 try {
   const port = parseInt(process.env.PORT);
