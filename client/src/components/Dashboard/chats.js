@@ -84,6 +84,7 @@ const Chats = () => {
       headers: { Authorization: `Bearer ${token}` },
     });
     setMessages(data);
+    console.log(data);
     socket.emit("joinChat", id);
   };
 
@@ -135,10 +136,19 @@ const Chats = () => {
                 >
                   <img
                     style={{ maxWidth: 80 }}
-                    className="w-100 p-2"
+                    className="w-100 p-2 rounded-circle"
                     src={person}
                     alt="dummy"
                   />
+                  {/* <div
+                    className="my-2 mr-lg-2 d-flex justify-content-center align-items-center rounded-circle bg-info w-100"
+                    style={{ maxWidth: 80, height: 80 }}
+                  >
+                    <h3 className="fw-bold mt-1">
+                      {chat.chatName?.charAt(0).toUpperCase() +
+                        chat.chatName?.charAt(1).toUpperCase()}
+                    </h3>
+                  </div> */}
                   <h4 className="d-none d-lg-block">{chat.chatName}</h4>
                 </div>
               ))}
@@ -202,8 +212,12 @@ const Chats = () => {
                                   }
                                 >
                                   <img
-                                    className="mx-1"
-                                    src={message.sender.image || person}
+                                    className="mx-1 rounded-circle"
+                                    src={
+                                      message.sender.image
+                                        ? `${process.env.REACT_APP_SERVER_URL}/${message.sender.image}`
+                                        : person
+                                    }
                                     alt={message.sender.id}
                                     style={{ width: 30, height: 30 }}
                                   />

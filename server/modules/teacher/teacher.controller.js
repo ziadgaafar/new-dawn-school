@@ -84,26 +84,30 @@ const showCourses = async (req, res, next) => {
 };
 
 const uploadExam = async (req, res) => {
-  const { grade, exam } = req.body;
-  const check = await courseModel.find({ teacher: req.user._id, grade: grade });
+  const { courseId, exam } = req.body;
+  const check = await courseModel.find({
+    teacher: req.user._id,
+    _id: courseId,
+  });
   if (check) {
     await courseModel.updateOne({ _id: check[0]._id }, { exam: exam });
-    res.status(200).json({ Message: "Updated Successfully" });
+    res.json({ Message: "Updated Successfully" });
   } else {
-    res.status(400).json({ Error: "course not found" });
+    return next(new HttpError("Unexpected Error", 500));
   }
 };
 
 const uploadassign = async (req, res) => {
-  const { grade, assign } = req.body;
-  const check = await courseModel.find({ teacher: req.user._id, grade: grade });
-  console.log(check);
+  const { courseId, assign } = req.body;
+  const check = await courseModel.find({
+    teacher: req.user._id,
+    _id: courseId,
+  });
   if (check) {
-    console.log(check._id);
     await courseModel.updateOne({ _id: check[0]._id }, { assignment: assign });
-    res.status(200).json({ Message: "Updated Successfully" });
+    res.json({ message: "Updated Successfully" });
   } else {
-    res.status(400).json({ Error: "course not found" });
+    return next(new HttpError("Unexpected Error", 500));
   }
 };
 

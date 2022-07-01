@@ -6,7 +6,7 @@ import { useHttpClient } from "../../hooks/http-hook";
 
 const Schedule = ({}) => {
   const { token } = useSelector((state) => state.auth);
-  const { sendRequest } = useHttpClient();
+  const { sendRequest, isLoading } = useHttpClient();
   const [data, setData] = useState(null);
 
   useLayoutEffect(() => {
@@ -16,7 +16,6 @@ const Schedule = ({}) => {
           url: "/student/timetable",
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log(data);
         setData(data);
       })();
     }
@@ -62,7 +61,11 @@ const Schedule = ({}) => {
         </Container>
       ) : (
         <div className="py-5 d-flex justify-content-center">
-          <Spinner animation="border" role="status" />
+          {isLoading ? (
+            <Spinner animation="border" role="status" />
+          ) : (
+            <h2>No Schedule</h2>
+          )}
         </div>
       )}
     </>

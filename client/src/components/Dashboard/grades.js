@@ -16,7 +16,7 @@ import * as yup from "yup";
 const Grades = ({}) => {
   const [data, setData] = useState(null);
   const [selectedDegree, setSelectedDegree] = useState(null);
-  const { sendRequest } = useHttpClient();
+  const getDegrees = useHttpClient();
   const updateDegree = useHttpClient();
   const { token, user } = useSelector((state) => state.auth);
   const formik = useFormik({
@@ -74,17 +74,18 @@ const Grades = ({}) => {
     (async () => {
       if (token) {
         if (user.role === "student") {
-          const data = await sendRequest({
+          const data = await getDegrees.sendRequest({
             url: "/student/degree",
             headers: { Authorization: `Bearer ${token}` },
           });
           setData(data);
         } else {
-          const data = await sendRequest({
+          const data = await getDegrees.sendRequest({
             url: "/teacher/getAllDegree",
             headers: { Authorization: `Bearer ${token}` },
           });
-          setData(data);
+          console.log(data);
+          // setData(data);
         }
       }
     })();
@@ -153,7 +154,7 @@ const Grades = ({}) => {
       <Container>
         <h1 className="fw-bold">Grades</h1>
       </Container>
-      {data && data.length > 0 ? (
+      {data ? (
         <Container>
           <Table bordered hover size="sm">
             <thead>
@@ -206,7 +207,11 @@ const Grades = ({}) => {
         </Container>
       ) : (
         <div className="d-flex align-items-center justify-content-center p-5">
-          <Spinner animation="border" />
+          {getDegrees.isLoading ? (
+            <Spinner animation="border" />
+          ) : (
+            <h2>No Grades</h2>
+          )}
         </div>
       )}
     </>

@@ -1,5 +1,6 @@
 const HttpError = require("../../../common/http-error");
 const chatModel = require("../../../DB/models/chat.Model");
+const imageModel = require("../../../DB/models/image.model");
 const messageModel = require("../../../DB/models/message.model");
 const studentModel = require("../../../DB/models/student.model");
 const teacherModel = require("../../../DB/models/teacher.model");
@@ -40,12 +41,12 @@ const sendMessgeController = async (req, res) => {
       if (result2 == false && result == false) {
         return next(new HttpError("Unauthorized", 401));
       } else {
+        const image = await imageModel.findOne({ userId: req.user._id });
         var newMessage = {
           sender: {
             id: req.user._id,
             name: req.user.firstName + " " + req.user.lastName,
-            image:
-              "https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png",
+            image: image.filePath,
           },
           content: content,
           chat: chatId,

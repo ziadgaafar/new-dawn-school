@@ -2,11 +2,21 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "./courses.css";
 import * as BsIcons from "react-icons/bs";
+import { GrNext } from "react-icons/gr";
+import { Link } from "react-router-dom";
 
 const courses = () => {
   return (
     <div className="pl-4 row w-100 justify-content-center">
-      <h1 className="fw-bold pt-4 pl-5">Courses</h1>
+      <div className="d-flex justify-content-between">
+        <h1 className="fw-bold pt-4 pl-5">Courses</h1>
+        <Link
+          to="/dashboard/courses/all"
+          className="pt-4 text-decoration-none fs-4"
+        >
+          See All
+        </Link>
+      </div>
       <Row className="mt-5">
         <Col lg={6} xs={11} className="m-4">
           <div className="english row w-100 float-right">

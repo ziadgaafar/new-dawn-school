@@ -10,13 +10,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(express.static("/uploads"));
 
-//All Routes required here
-/* Student Routes  ====> {/api/student/Register ==> for student signup} + {/api/student/dashboard ==> for student dashboard}
-   Teacher Routes  ====> {/api/teacher/addTeacher ==> for teacher signup} + {/api/teacher/dashboard ==> for teacher dashboard}
-   Login Route     ====> {/api/user/login ==> for login}
-   Contact Route   ====> {/api/contactus ==> for contacting}
-*/
 const {
   courseRouter,
   teacherRoutes,

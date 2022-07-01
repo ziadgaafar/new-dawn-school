@@ -7,7 +7,7 @@
 
 .english{   
     color: white;
-    background-image: url('../../images/english.jpg');
+    background-image: url('../../../images/english.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
@@ -16,7 +16,7 @@
 }
 .mathematics{
     color: white;
-    background-image: url('../../images/math.jpg');
+    background-image: url('../../../images/math.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
@@ -25,7 +25,7 @@
 }
 .science{
     color: white;
-    background-image: url('../../images/science.jpg');
+    background-image: url('../../../images/science.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;

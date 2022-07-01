@@ -6,15 +6,15 @@ const messageSchema = new mongoose.Schema(
     content: { type: String, trim: true },
     sender: {
       id: {
-        type: mongoose.Types.ObjectId
+        type: mongoose.Types.ObjectId,
       },
       name: {
-        type: String
+        type: String,
       },
       image: {
-        type: String
-      }
-    }
+        type: String,
+      },
+    },
   },
   {
     timestamps: true,
