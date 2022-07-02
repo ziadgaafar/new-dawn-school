@@ -84,7 +84,6 @@ const Chats = () => {
       headers: { Authorization: `Bearer ${token}` },
     });
     setMessages(data);
-    console.log(data);
     socket.emit("joinChat", id);
   };
 
@@ -218,7 +217,7 @@ const Chats = () => {
                                         ? `${process.env.REACT_APP_SERVER_URL}/${message.sender.image}`
                                         : person
                                     }
-                                    alt={message.sender.id}
+                                    alt={message.sender.name.split(" ")[0]}
                                     style={{ width: 30, height: 30 }}
                                   />
                                 </OverlayTrigger>
