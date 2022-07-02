@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Col, Container, Form, Row, Toast } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../NavBar/logo.png";
@@ -35,6 +35,14 @@ const Login = () => {
       navigate("/dashboard");
     },
   });
+
+  useEffect(() => {
+    const localToken = localStorage.getItem("token");
+    console.log(localToken);
+    if (localToken) {
+      navigate("/dashboard");
+    }
+  }, []);
 
   return (
     <div
