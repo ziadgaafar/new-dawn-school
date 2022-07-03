@@ -14,7 +14,7 @@ const auth = (data) => {
       let User = await studentModel.findOne({ _id: id }).select("-password");
       let teacher = await teacherModel.findOne({ _id: id }).select("-password");
       if (!User && !teacher) {
-        res.status(500).json({ message: "not fouind user" });
+        return next(new HttpError("User not found", 404));
       } else {
         if (User) {
           req.user = User;

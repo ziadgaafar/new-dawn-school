@@ -10,7 +10,7 @@ const teacherAddition = async (req, res, next) => {
     const { email, firstname, lastname, courses, salary } = req.body;
     const found = await teacherModel.findOne({ email });
     if (found) {
-      res.status(400).json({ Error: "User Already Registed!" });
+      return next(new HttpError("teacher already registered", 400));
     } else {
       const added = await new teacherModel({
         email,
@@ -28,7 +28,7 @@ const teacherAddition = async (req, res, next) => {
       res.json({ message: "Added Successfully" });
     }
   } catch (error) {
-    res.status(500).json({ Message: "Server Error", error });
+    return next(new HttpError("server error", 500));
   }
 };
 
@@ -40,7 +40,7 @@ const teacherVerification = async (req, res, next) => {
     const check = await teacherModel.findOne({ email: email });
     if (check) {
       if (check.verified) {
-        res.json({ Error: "User Already Verified!" });
+        return next(new HttpError("teacher is already verified", 400));
       } else {
         await teacherModel.findByIdAndUpdate(
           check._id,
@@ -50,10 +50,10 @@ const teacherVerification = async (req, res, next) => {
         res.json({ message: "Updated Successfully" });
       }
     } else {
-      res.status(400).json({ Error: "User Not Registed!" });
+      return next(new HttpError("teacher is not registed", 400));
     }
   } catch (error) {
-    res.status(500).json({ Message: "Server Error", error });
+    return next(new HttpError("server error", 500));
   }
 };
 const showTeachertDash = () => {
@@ -63,23 +63,23 @@ const showTimeTable = async (req, res, next) => {
   const { userId } = req.user._id;
   const found = await courseModel.findById(userId);
   if (find) {
-    res.status(200).json({
+    res.json({
       subject: found.subject,
       grade: found.grade,
       day: found.day,
       time: found.time,
     });
   } else {
-    res.status(400).json({ Error: "Your time table is free" });
+    return next(new HttpError("your time table is free", 400));
   }
 };
 
 const showCourses = async (req, res, next) => {
   const check = await courseModel.find({ teacher: req.user._id });
   if (!check == []) {
-    res.status(200).json({ check });
+    res.json({ check });
   } else {
-    res.status(400).json({ Error: "No Founded Courses" });
+    return next(new HttpError("courses not found", 404));
   }
 };
 

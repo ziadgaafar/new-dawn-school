@@ -10,7 +10,7 @@ const sendMessgeController = async (req, res) => {
   try {
     const { content, chatId } = req.body;
     if (!content || !chatId) {
-      return res.status(400).send("not request");
+      return next(new HttpError("not request", 400));
     } else {
       const GA = await chatModel.findOne({ _id: chatId }).select("groupAdmin");
       const USER = await chatModel.findOne({ _id: chatId }).select("users");

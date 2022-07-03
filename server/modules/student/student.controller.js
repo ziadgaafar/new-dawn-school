@@ -5,6 +5,21 @@ const HttpError = require("../../common/http-error");
 const courseModel = require("../../DB/models/course.Model");
 const degreeModel = require("../../DB/models/degree");
 const teacherModel = require("../../DB/models/teacher.model");
+const chatModel = require("../../DB/models/chat.Model");
+
+const pushStudent = async function (grade, student) {
+  const courses = await courseModel.find({grade:grade})
+  if (courses.length == 0) {
+    next()
+  } else {
+    courses.forEach(async (element) => {
+      element.student.push(student);
+      await courseModel.findByIdAndUpdate(element._id, {student: elemnt.student})
+      await chatModel.findOneAndUpdate({groupAdmin: element.teacher},{users: [...chat.users,student]})
+      await new degreeModel({teacher:element.teacher, course:element._id, student:student}).save();
+    });
+  }
+}
 
 const studentRegister = async (req, res, next) => {
   try {
@@ -39,6 +54,7 @@ const studentRegister = async (req, res, next) => {
         submitQuestion,
       });
       const addStudent = await newStudent.save();
+      await pushStudent(newStudent.grade, newStudent._id)
       var token = jwt.sign({ addStudent }, process.env.TOKEN_KEY, {
         expiresIn: 420,
       });
@@ -47,7 +63,7 @@ const studentRegister = async (req, res, next) => {
       <a style="border:1px solid grey;padding:8px;border-radius:8px;text-decoration:none" href="${req.protocol}://${req.headers.host}/api/student/confirmation/${token}">click here</a>
     </div>`;
       sendEmail(email, message);
-      res.status(200).json({ message: "Applied Successfully" });
+      res.json({ message: "Applied Successfully" });
     }
   } catch (error) {
     console.log(error);
@@ -70,14 +86,14 @@ const confirmRegister = async (req, res) => {
         { isConfirmed: true },
         { new: true }
       );
-      res.status(200).redirect(process.env.CLIENT_URL);
+      res.redirect(process.env.CLIENT_URL);
     } else {
       return next(
         new HttpError("Email is already confirmed or not registed", 400)
       );
     }
   } catch (error) {
-    res.status(500).json({ Message: "Server Error", error });
+    return next(new HttpError("server error", 500));
   }
 };
 
@@ -85,9 +101,9 @@ const confirmRegister = async (req, res) => {
 const showCourses = async (req, res, next) => {
   const check = await courseModel.find({ student: req.user._id });
   if (!check == []) {
-    res.status(200).json({ check });
+    res.json({ check });
   } else {
-    res.status(400).json({ Error: "No Founded Courses" });
+    return next(new HttpError("courses not found", 404));
   }
 };
 
@@ -122,7 +138,6 @@ const studentDegree = async (req, res, next) => {
       return next(new HttpError("Degrees not found!", 404));
     }
   } catch (error) {
-    console.log(error);
     return next(new HttpError("Unexpected Error", 500));
   }
 };
@@ -131,18 +146,18 @@ const getExam = async (req, res) =>{
   const {courseId} = req.body
   const found = await courseModel.findOne({_id:courseId})
   if (found) {
-    res.status(200).json(found.exam)
+    res.json(found.exam)
   } else {
-    res.status(400).json({Error:"course not existed"})
+    return next(new HttpError("course not found", 404));
   }
 }
 const getCourseAssignment = async (req, res) =>{
   const {courseId} = req.body
   const found = await courseModel.findOne({_id:courseId})
   if (found) {
-    res.status(200).json(found.assignment)
+    res.json(found.assignment)
   } else {
-    res.status(400).json({Error:"course not existed"})
+    return next(new HttpError("course not found", 404));
   }
 }
 
@@ -155,5 +170,46 @@ module.exports = {
   showTimeTable,
   getExam,
   getCourseAssignment,
-  
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// if(!req.body.studentId || !req.body.courseId || !req.body.chatId){
+//   return next(new HttpError("please fill all fields", 400));
+// }
+// var student =JSON.parse(req.body.studentId)
+// const createStudent=await courseModel.findById(req.body.courseId)
+// if (createStudent){
+//   for (let i = 0; i < student.length; i++) {
+//       const element = student[i];
+//       uploadDegree(createStudent._id, element, createStudent.teacher)
+//       createStudent.student.push(element)
+//   }
+//   await courseModel.updateOne({_id:createStudent._id},{student:createStudent.student})
+//   await addToChat(req.body.chatId, createStudent.student)
+//   res.json("addStudent")
+// }else{
+//   return next(new HttpError("unexpected error", 500));
+// }

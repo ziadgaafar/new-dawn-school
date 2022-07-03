@@ -23,7 +23,7 @@ const bookUpload = async (req, res, next) => {
       fileType: req.file.mimetype,
       fileSize: fileSizeFormatter(req.file.size, 2), // 0.00
     }).save();
-    res.status(201).send("File Uploaded Successfully");
+    res.send("File Uploaded Successfully");
   } catch (error) {
     return next(new HttpError("Unexpected Error", 500));
   }
@@ -33,9 +33,9 @@ const getBook = async (req, res, next) => {
   const { courseId } = req.query;
   try {
     const files = await bookModel.findOne({ courseId: courseId });
-    res.status(200).json(files);
+    res.json(files);
   } catch (error) {
-    res.status(400).json(error.message);
+    return next(new HttpError(error.message, 500));
   }
 };
 
@@ -45,7 +45,7 @@ const downloadBook = async (req, res, next) => {
     let x = __dirname + "../../../" + found[0].filePath;
     res.download(x);
   } else {
-    res.status(400).json({ Error: "book not found" });
+    return next(new HttpError("book not found", 404));
   }
 };
 

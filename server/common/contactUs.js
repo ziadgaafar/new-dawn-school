@@ -1,4 +1,5 @@
 const contactModel = require("../DB/models/contact.model");
+const HttpError = require("./http-error");
 const route = require("express").Router();
 
 route.post("/", async (req, res, next) => {
@@ -7,7 +8,7 @@ route.post("/", async (req, res, next) => {
     await new contactModel({ name, email, message }).save();
     res.json({ message: "Done" });
   } catch (error) {
-    res.status(500).json({ Message: "Server Error", error });
+    return next(new HttpError("server error in contact", 500));
   }
 });
 

@@ -1,13 +1,14 @@
 const studentModel = require("../../DB/models/student.model");
 const teacherModel = require("../../DB/models/teacher.model");
-const sendEmail = require("../../common/verification")
+const sendEmail = require("../../common/verification");
+const HttpError = require("../../common/http-error");
 
 const unAceptedTeacher = async(req,res,next) => {
     const allTeachers = await teacherModel.find({isAccepted: false});
     if (allTeachers.length == 0) {
-        res.json({Message:"no teachers to accept"})
+        return next(new HttpError("no teachers to accept", 400));
     } else {
-        res.status(200).json({techers: allTeachers})
+        res.json({techers: allTeachers})
     }
 }
 
@@ -16,7 +17,7 @@ const acceptTeacher = async(req,res,next) => {
     const found = await teacherModel.findOne({_id:teacherId});
     if (found) {
         if (found.isAccepted == true) {
-            res.status(400).json({Error:"this teacher is already accepted"})
+            return next(new HttpError("this teacher is already accepted", 400));
         } else {
             await teacherModel.findOneAndUpdate({_id:teacherId}, {isAccepted:true});
             const message = `
@@ -26,19 +27,19 @@ const acceptTeacher = async(req,res,next) => {
                 </div>
             `;
             sendEmail(found.email, message)
-            res.status(200).json({Message:"teacher is accepted successfully"})
+            res.json({Message:"teacher is accepted successfully"})
         }
     } else {
-        res.status(400).json({Error:"this teacher didn't register"})
+        return next(new HttpError("this teacher is not registered", 400));
     }
 }
 
 const unAceptedStudent = async(req,res,next) => {
     const allStudents = await studentModel.find({isAccepted: false});
     if (allStudents.length == 0) {
-        res.json({Message:"no teachers to accept"})
+        return next(new HttpError("no student to accept", 400));
     } else {
-        res.status(200).json({students: allStudents})
+        res.json({students: allStudents})
     }
 }
 
@@ -47,7 +48,7 @@ const acceptStudent = async(req,res,next) => {
     const found = await studentModel.findOne({_id:studentId});
     if (found) {
         if (found.isAccepted == true) {
-            res.status(400).json({Error:"this teacher is already accepted"})
+            return next(new HttpError("this student is already accepted", 400));
         } else {
             await studentModel.findOneAndUpdate({_id:studentId}, {isAccepted:true});
             const message = `
@@ -57,10 +58,10 @@ const acceptStudent = async(req,res,next) => {
                 </div>
             `;
             sendEmail(found.email, message)
-            res.status(200).json({Message:"student is accepted successfully"})
+            res.json({Message:"student is accepted successfully"})
         }
     } else {
-        res.status(400).json({Error:"this teacher didn't register"})
+        return next(new HttpError("this student didn't register", 400));
     }
 }
 
