@@ -44,7 +44,7 @@ const Student = () => {
     },
     {
       subject: "Arabic",
-      color: "orange",
+      color: "rgb(247, 60, 60)",
       degree: "10%",
     },
   ];
