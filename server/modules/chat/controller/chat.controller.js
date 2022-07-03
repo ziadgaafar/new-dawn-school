@@ -33,7 +33,7 @@ const removeFromGroup = async (req, res) => {
       .populate("groupAdmin", "-password");
     res.send(updateChat);
   } catch (error) {
-    return next(new HttpError(error, 500));
+    return next(new HttpError(error.message, 500));
   }
 };
 
