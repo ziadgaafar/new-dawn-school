@@ -17,7 +17,7 @@ import Settings from "../Dashboard/settings";
 import Schedule from "../Dashboard/schedule";
 import Grades from "../Dashboard/grades";
 
-// import Stream from "../Dashboard/courses/stream";
+import Stream from "../Dashboard/courses/stream";
 
 import person from "../../images/person.png";
 import { LOGIN } from "../../redux/auth";
@@ -92,7 +92,7 @@ const Dashboard = ({}) => {
             <Route path="/settings" element={<Settings />} />
             <Route path="/schedule" element={<Schedule />} />
             <Route path="/grades" element={<Grades />} />
-            {/* <Route path="/stream" element={<Stream />} /> */}
+            <Route path="/stream" element={<Stream />} />
           </Routes>
 
           <Modal show={show} onHide={handleClose}>

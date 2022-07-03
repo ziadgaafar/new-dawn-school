@@ -177,6 +177,7 @@ const AllCourses = ({}) => {
                 <th className="fw-bold text-center">Book</th>
                 <th className="fw-bold text-center">Assignment</th>
                 <th className="fw-bold text-center">Exam</th>
+                <th className="fw-bold text-center">Stream</th>
               </tr>
             </thead>
             <tbody>
@@ -261,6 +262,11 @@ const AllCourses = ({}) => {
                         }
                       />
                     )}
+                  </td>
+                  <td>
+                    <Link to={'/dashboard/stream'} target='_blank'>
+                      {user.role === 'teacher' ? 'Start Stream' : 'Join Stream'}
+                    </Link>
                   </td>
                 </tr>
               ))}

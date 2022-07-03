@@ -1,15 +1,17 @@
 import { useEffect, useState, useRef } from 'react';
 
 import {Peer} from "peerjs"
-
-
+import { Container } from 'react-bootstrap';
+import {useSelector} from 'react-redux' ;
+import { Link } from "react-router-dom";
 
 
 
 
 function Stream() {
 
-
+  const { token, user } = useSelector((state) => state.auth);
+ 
   const [peerId, setPeerId] = useState('');
   const [remotePeerIdValue, setRemotePeerIdValue] = useState('');
   const remoteVideoRef = useRef(null);
@@ -63,16 +65,23 @@ function Stream() {
 
   console.log(peerId)
   return (
-    <div className="App">
-      <h5>
-        Current User Id is : {peerId}
-      </h5>
-      <input type="text" value={remotePeerIdValue} onChange={e => setRemotePeerIdValue(e.target.value)} />
-      <button onClick={() => call(remotePeerIdValue)}>Call</button>
+    <Container className="App">
+       {user.role === 'teacher' && <>
+        <h5>
+          Current User Id is : {peerId}
+        </h5>
+       </> }
+      {user.role === 'student' && <>
+        <input type="text" value={remotePeerIdValue} onChange={e => setRemotePeerIdValue(e.target.value)} />
+        <button onClick={() => call(remotePeerIdValue)}>Call</button>
+      </> }
       <div> <video ref={currentUserVedioRef} /> </div>
       <div> <video ref={remoteVideoRef} /> </div>
+      <Link to={'/dashboard/courses/all'}>
+       Close
+      </Link>
  
-    </div>
+    </Container>
   );
 }
 
