@@ -26,9 +26,9 @@ const assignUpload = async (req, res, next) => {
       fileType: req.file.mimetype,
       fileSize: fileSizeFormatter(req.file.size, 2), // 0.00
     }).save();
-    res.status(201).json({ message: "Uploaded Successfully!" });
+    res.json({ message: "Uploaded Successfully!" });
   } catch (error) {
-    return next(new HttpError("Unexpected Error", 500));
+    return next(new HttpError(error.message, 500));
   }
 };
 
@@ -36,9 +36,9 @@ const getAssign = async (req, res, next) => {
   const { courseId } = req.body;
   try {
     const files = await assignmentModel.find({ courseId: courseId });
-    res.status(200).json(files);
+    res.json(files);
   } catch (error) {
-    res.status(400).json(error.message);
+    return next(new HttpError(error.message, 404));
   }
 };
 

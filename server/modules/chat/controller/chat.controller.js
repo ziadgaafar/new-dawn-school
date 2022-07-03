@@ -1,7 +1,7 @@
 const chatModel = require("../../../DB/models/chat.Model");
 const studentModel = require(".././../../DB/models/student.model");
 const teacherModel = require(".././../../DB/models/teacher.model");
-const { HttpError } = require("../../../common/http-error");
+const HttpError = require("../../../common/http-error");
 
 const fetchChat = async (req, res) => {
   try {
@@ -16,7 +16,7 @@ const fetchChat = async (req, res) => {
           path: "latestMessage.sender",
           select: "name email",
         });
-        res.status(200).json({ result });
+        res.json({ result });
       });
   } catch (error) {
     return next(new HttpError("Unexpected Error", 500));
@@ -31,9 +31,9 @@ const removeFromGroup = async (req, res) => {
       .findByIdAndUpdate(chatId, { $pull: { users: userId } }, { new: true })
       .populate("users", "-password")
       .populate("groupAdmin", "-password");
-    res.status(200).send(updateChat);
+    res.send(updateChat);
   } catch (error) {
-    return res.status(400).send({ messsage: "Error", error });
+    return next(new HttpError(error, 500));
   }
 };
 

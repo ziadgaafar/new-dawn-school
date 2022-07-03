@@ -1,6 +1,7 @@
 const chatModel = require("../../DB/models/chat.Model");
 const courseModel = require("../../DB/models/course.Model");
 const degreeModel = require("../../DB/models/degree");
+const HttpError = require("../../common/http-error")
 
 const createGroup = async function (name, users, admin) {
     const groupChat = await chatModel({
@@ -22,7 +23,7 @@ const createCourse = async(req,res,next) => {
     const{subject, grade, teacher, student, progress, year, day, time} = req.body;
     const check = await courseModel.find({subject,grade});
     if(!check.length == []){
-        res.status(400).json({Error:"This course already Existed"})
+        return next(new HttpError("this course already existed", 400));
     }else{
         var student2 =JSON.parse(student)
         let newCourse = await new courseModel({subject, grade, teacher, student2, progress, year, day, time}).save();
@@ -40,9 +41,9 @@ const deleteCourse = async(req,res,next) => {
     const check = await courseModel.findById({_id:cousreId});
     if (check) {
         await courseModel.deleteOne({_id:check._id});
-        res.status(200).json({Message:"deleted Successfully"});
+        res.json({Message:"deleted Successfully"});
     } else {
-        res.status(400).json({Error:"Course Not Found"});
+        return next(new HttpError("course not found", 404));
     }
 }
 
@@ -51,9 +52,9 @@ const updateCourse = async(req,res,next) => {
     const check = await courseModel.findById({_id:courseId});
     if (check) {
         await courseModel.updateOne({_id:check._id}, {teacher:teacher});
-        res.status(200).json({Message:"Updated Successfully"});
+        res.json({Message:"Updated Successfully"});
     } else {
-        res.status(400).json({Error:"course not found"});
+        return next(new HttpError("course not found", 404));
     }
 }
 
@@ -63,7 +64,7 @@ const addToChat = async function (chat, user) {
 
 const addStudent=async(req,res)=>{
     if(!req.body.studentId || !req.body.courseId || !req.body.chatId){
-        return res.status(400).send({messsage:"please fill all the feilds"})
+        return next(new HttpError("please fill all fields", 400));
     }
     var student =JSON.parse(req.body.studentId)
     const createStudent=await courseModel.findById(req.body.courseId)
@@ -75,9 +76,9 @@ const addStudent=async(req,res)=>{
         }
         await courseModel.updateOne({_id:createStudent._id},{student:createStudent.student})
         await addToChat(req.body.chatId, createStudent.student)
-        res.status(200).json("addStudent")
+        res.json("addStudent")
     }else{
-        res.status(400).json("erorrr")
+        return next(new HttpError("unexpected error", 500));
     }
 }
 module.exports = {createCourse, deleteCourse, updateCourse,addStudent}
