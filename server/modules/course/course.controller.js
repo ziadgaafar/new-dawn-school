@@ -21,20 +21,24 @@ const uploadDegree=async function (course,student,teacher) {
 }
 
 const createCourse = async(req,res,next) => {
-    const{subject, grade, teacher, progress, year, day, time} = req.body;
-    const check = await courseModel.find({subject,grade});
-    if(!check.length == []){
-        return next(new HttpError("this course already existed", 400));
-    }else{
-        // var student2 =JSON.parse(student)
-        const student3 = await studentModel.find({studentLevel: grade})
-        let newCourse = await new courseModel({subject, grade, teacher, student:student3, progress, year, day, time}).save();
-        for (let i = 0; i < student2.length; i++) {
-            const element = student2[i];
-            uploadDegree(newCourse._id, element, newCourse.teacher)
+    try {
+        const{subject, grade, teacher, progress, year, day, time} = req.body;
+        const check = await courseModel.find({subject,grade});
+        if(!check.length == []){
+            return next(new HttpError("this course already existed", 400));
+        }else{
+            // var student2 =JSON.parse(student)
+            const student3 = await studentModel.find({studentLevel: grade})
+            let newCourse = await new courseModel({subject, grade, teacher, student:student3, progress, year, day, time}).save();
+            for (let i = 0; i < student2.length; i++) {
+                const element = student3[i];
+                uploadDegree(newCourse._id, element, newCourse.teacher)
+            }
+            await createGroup(subject, student3, teacher);
+            res.json({Message:"Added Successfully"});
         }
-        await createGroup(subject, student2, teacher);
-        res.json({Message:"Added Successfully"});
+    } catch (error) {
+        return next(new HttpError(error, 500));
     }
 }
 
