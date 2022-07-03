@@ -5,6 +5,21 @@ const HttpError = require("../../common/http-error");
 const courseModel = require("../../DB/models/course.Model");
 const degreeModel = require("../../DB/models/degree");
 const teacherModel = require("../../DB/models/teacher.model");
+const chatModel = require("../../DB/models/chat.Model");
+
+const pushStudent = async function (grade, student) {
+  const courses = await courseModel.find({grade:grade})
+  if (courses.length == 0) {
+    next()
+  } else {
+    courses.forEach(async (element) => {
+      element.student.push(student);
+      await courseModel.findByIdAndUpdate(element._id, {student: elemnt.student})
+      await chatModel.findOneAndUpdate({groupAdmin: element.teacher},{users: [...chat.users,student]})
+      await new degreeModel({teacher:element.teacher, course:element._id, student:student}).save();
+    });
+  }
+}
 
 const studentRegister = async (req, res, next) => {
   try {
@@ -39,6 +54,7 @@ const studentRegister = async (req, res, next) => {
         submitQuestion,
       });
       const addStudent = await newStudent.save();
+      await pushStudent(newStudent.grade, newStudent._id)
       var token = jwt.sign({ addStudent }, process.env.TOKEN_KEY, {
         expiresIn: 420,
       });
@@ -155,3 +171,45 @@ module.exports = {
   getExam,
   getCourseAssignment,
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// if(!req.body.studentId || !req.body.courseId || !req.body.chatId){
+//   return next(new HttpError("please fill all fields", 400));
+// }
+// var student =JSON.parse(req.body.studentId)
+// const createStudent=await courseModel.findById(req.body.courseId)
+// if (createStudent){
+//   for (let i = 0; i < student.length; i++) {
+//       const element = student[i];
+//       uploadDegree(createStudent._id, element, createStudent.teacher)
+//       createStudent.student.push(element)
+//   }
+//   await courseModel.updateOne({_id:createStudent._id},{student:createStudent.student})
+//   await addToChat(req.body.chatId, createStudent.student)
+//   res.json("addStudent")
+// }else{
+//   return next(new HttpError("unexpected error", 500));
+// }

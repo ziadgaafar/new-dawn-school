@@ -30,7 +30,7 @@ const createCourse = async(req,res,next) => {
             // var student2 =JSON.parse(student)
             const student3 = await studentModel.find({studentLevel: grade})
             let newCourse = await new courseModel({subject, grade, teacher, student:student3, progress, year, day, time}).save();
-            for (let i = 0; i < student2.length; i++) {
+            for (let i = 0; i < student3.length; i++) {
                 const element = student3[i];
                 uploadDegree(newCourse._id, element, newCourse.teacher)
             }
@@ -64,27 +64,4 @@ const updateCourse = async(req,res,next) => {
     }
 }
 
-const addToChat = async function (chat, user) {
-    const updateChat = await chatModel.findByIdAndUpdate({_id:chat},{users:user})
-};
-
-const addStudent=async(req,res)=>{
-    if(!req.body.studentId || !req.body.courseId || !req.body.chatId){
-        return next(new HttpError("please fill all fields", 400));
-    }
-    var student =JSON.parse(req.body.studentId)
-    const createStudent=await courseModel.findById(req.body.courseId)
-    if (createStudent){
-        for (let i = 0; i < student.length; i++) {
-            const element = student[i];
-            uploadDegree(createStudent._id, element, createStudent.teacher)
-            createStudent.student.push(element)
-        }
-        await courseModel.updateOne({_id:createStudent._id},{student:createStudent.student})
-        await addToChat(req.body.chatId, createStudent.student)
-        res.json("addStudent")
-    }else{
-        return next(new HttpError("unexpected error", 500));
-    }
-}
-module.exports = {createCourse, deleteCourse, updateCourse,addStudent}
+module.exports = {createCourse, deleteCourse, updateCourse}
