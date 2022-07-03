@@ -1,5 +1,6 @@
 const chatModel = require("../../DB/models/chat.Model");
 const courseModel = require("../../DB/models/course.Model");
+const studentModel = require("../../DB/models/student.model")
 const degreeModel = require("../../DB/models/degree");
 const HttpError = require("../../common/http-error")
 
@@ -20,13 +21,14 @@ const uploadDegree=async function (course,student,teacher) {
 }
 
 const createCourse = async(req,res,next) => {
-    const{subject, grade, teacher, student, progress, year, day, time} = req.body;
+    const{subject, grade, teacher, progress, year, day, time} = req.body;
     const check = await courseModel.find({subject,grade});
     if(!check.length == []){
         return next(new HttpError("this course already existed", 400));
     }else{
-        var student2 =JSON.parse(student)
-        let newCourse = await new courseModel({subject, grade, teacher, student2, progress, year, day, time}).save();
+        // var student2 =JSON.parse(student)
+        const student3 = await studentModel.find({studentLevel: grade})
+        let newCourse = await new courseModel({subject, grade, teacher, student:student3, progress, year, day, time}).save();
         for (let i = 0; i < student2.length; i++) {
             const element = student2[i];
             uploadDegree(newCourse._id, element, newCourse.teacher)
