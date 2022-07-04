@@ -12,6 +12,8 @@ import { useSelector } from "react-redux";
 import { useHttpClient } from "../../../hooks/http-hook";
 import { MdOutlineFileUpload, MdOutlineFileDownload } from "react-icons/md";
 import { BiLinkExternal } from "react-icons/bi";
+import { AiFillDelete } from "react-icons/ai";
+import { CgAdd } from "react-icons/cg";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
@@ -22,11 +24,13 @@ const AllCourses = ({}) => {
   const [selectedAssignment, setSelectedAssignment] = useState("");
   const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedExam, setSelectedExam] = useState("");
+  const [addCourseModal, setAddCourseModal] = useState(false);
   const [data, setData] = useState(null);
   const { token, user } = useSelector((state) => state.auth);
   const getCourses = useHttpClient();
   const updateAssignment = useHttpClient();
   const updateExam = useHttpClient();
+  const addCourse = useHttpClient();
   const { sendRequest } = useHttpClient();
   const formik = useFormik({
     enableReinitialize: true,
@@ -92,6 +96,34 @@ const AllCourses = ({}) => {
 
       setSelectedExam("");
       setSelectedCourse("");
+    },
+  });
+
+  const formikCourse = useFormik({
+    initialValues: {
+      subject: "",
+      grade: 0,
+      day: "",
+      year: "",
+      time: "",
+    },
+    validationSchema: yup.object({
+      subject: yup.string().required().max(15),
+      grade: yup.number().required().min(1).max(12),
+      day: yup.string().required(),
+      year: yup.string().required(),
+      time: yup.string().required(),
+    }),
+    onSubmit: async (values, { resetForm }) => {
+      const data = await addCourse.sendRequest({
+        method: "POST",
+        url: "/course/create",
+        body: values,
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log(data.message);
+      resetForm();
+      setAddCourseModal(false);
     },
   });
 
@@ -162,12 +194,30 @@ const AllCourses = ({}) => {
     setSelectedCourse(courseId);
   };
 
+  const deleteCourseHandler = async (courseId) => {
+    const data = await sendRequest({
+      method: "DELETE",
+      url: "/course/delete",
+      body: { courseId },
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    setData((prev) => prev.filter((course) => course._id !== courseId));
+    console.log(data.message);
+  };
+
   return (
     <>
-      <Container>
+      <Container className="d-flex justify-content-between align-items-center">
         <h1 className="fw-bold">Courses</h1>
+        {user.role === "teacher" && (
+          <CgAdd
+            size="35"
+            role="button"
+            onClick={() => setAddCourseModal(true)}
+          />
+        )}
       </Container>
-      {data ? (
+      {data && data.length > 0 ? (
         <Container>
           <Table bordered hover size="sm">
             <thead>
@@ -178,6 +228,7 @@ const AllCourses = ({}) => {
                 <th className="fw-bold text-center">Assignment</th>
                 <th className="fw-bold text-center">Exam</th>
                 <th className="fw-bold text-center">Stream</th>
+                <th className="fw-bold text-center">Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -264,9 +315,17 @@ const AllCourses = ({}) => {
                     )}
                   </td>
                   <td>
-                    <Link to={'/dashboard/stream'} target='_blank'>
-                      {user.role === 'teacher' ? 'Start Stream' : 'Join Stream'}
+                    <Link to={"/dashboard/stream"} target="_blank">
+                      {user.role === "teacher" ? "Start Stream" : "Join Stream"}
                     </Link>
+                  </td>
+                  <td className="text-center">
+                    <AiFillDelete
+                      color="d11a2a"
+                      size="25"
+                      role="button"
+                      onClick={() => deleteCourseHandler(item._id)}
+                    />
                   </td>
                 </tr>
               ))}
@@ -280,7 +339,7 @@ const AllCourses = ({}) => {
               <Spinner animation="border" />
             </div>
           ) : (
-            <h1>No Data</h1>
+            <h1 className="p-5 text-center">No Courses</h1>
           )}
         </>
       )}
@@ -357,6 +416,102 @@ const AllCourses = ({}) => {
             Update
           </Button>
           <Button variant="danger" onClick={() => setSelectedExam("")}>
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal size="md" centered show={addCourseModal}>
+        <Modal.Header>
+          <Modal.Title>Add Course</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={formikCourse.handleSubmit}>
+            <Form.Group className="mb-4 col-12" controlId="formGridName">
+              <Form.Label className="font-weight-bold">Subject</Form.Label>
+              <Form.Control
+                placeholder="Enter Subject"
+                name="subject"
+                value={formikCourse.values.subject}
+                onChange={formikCourse.handleChange}
+              />
+              {formikCourse.touched.subject && formikCourse.errors.subject ? (
+                <div className="position-absolute text-danger">
+                  {formikCourse.errors.subject}
+                </div>
+              ) : null}
+            </Form.Group>
+            <Form.Group className="mb-4 col-12" controlId="formGridName">
+              <Form.Label className="font-weight-bold">Grade</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Enter Grade"
+                name="grade"
+                value={formikCourse.values.grade}
+                onChange={formikCourse.handleChange}
+              />
+              {formikCourse.touched.grade && formikCourse.errors.grade ? (
+                <div className="position-absolute text-danger">
+                  {formikCourse.errors.grade}
+                </div>
+              ) : null}
+            </Form.Group>
+            <Form.Group className="mb-4 col-12" controlId="formGridName">
+              <Form.Label className="font-weight-bold">Day</Form.Label>
+              <Form.Control
+                placeholder="Enter Day"
+                name="day"
+                value={formikCourse.values.day}
+                onChange={formikCourse.handleChange}
+              />
+              {formikCourse.touched.day && formikCourse.errors.day ? (
+                <div className="position-absolute text-danger">
+                  {formikCourse.errors.day}
+                </div>
+              ) : null}
+            </Form.Group>
+            <Form.Group className="mb-4 col-12" controlId="formGridName">
+              <Form.Label className="font-weight-bold">Year</Form.Label>
+              <Form.Control
+                placeholder="Enter Year"
+                name="year"
+                value={formikCourse.values.year}
+                onChange={formikCourse.handleChange}
+              />
+              {formikCourse.touched.year && formikCourse.errors.year ? (
+                <div className="position-absolute text-danger">
+                  {formikCourse.errors.year}
+                </div>
+              ) : null}
+            </Form.Group>
+            <Form.Group className="mb-4 col-12" controlId="formGridName">
+              <Form.Label className="font-weight-bold">Time</Form.Label>
+              <Form.Control
+                placeholder="Enter Time"
+                name="time"
+                value={formikCourse.values.time}
+                onChange={formikCourse.handleChange}
+              />
+              {formikCourse.touched.time && formikCourse.errors.time ? (
+                <div className="position-absolute text-danger">
+                  {formikCourse.errors.time}
+                </div>
+              ) : null}
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            onClick={formikCourse.handleSubmit}
+            disabled={addCourse.isLoading}
+          >
+            {" "}
+            {addCourse.isLoading && (
+              <Spinner animation="border" size="sm" />
+            )}{" "}
+            Submit
+          </Button>
+          <Button variant="danger" onClick={() => setAddCourseModal(false)}>
             Cancel
           </Button>
         </Modal.Footer>

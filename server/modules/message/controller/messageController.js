@@ -45,7 +45,10 @@ const sendMessgeController = async (req, res) => {
         var newMessage = {
           sender: {
             id: req.user._id,
-            name: req.user.firstName + " " + req.user.lastName,
+            name:
+              (req.user.firstName || req.user.firstname) +
+              " " +
+              (req.user.lastName || req.user.lastname),
             image: image.filePath,
           },
           content: content,

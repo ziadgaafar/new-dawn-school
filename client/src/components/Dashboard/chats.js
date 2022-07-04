@@ -35,6 +35,7 @@ const Chats = () => {
         url: "/chat",
         headers: { Authorization: `Bearer ${token}` },
       });
+      console.log(data.result);
       setChats(data.result);
     };
     if (token) {

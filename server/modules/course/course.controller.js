@@ -2,10 +2,11 @@ const chatModel = require("../../DB/models/chat.Model");
 const courseModel = require("../../DB/models/course.Model");
 const studentModel = require("../../DB/models/student.model");
 const degreeModel = require("../../DB/models/degree");
+const messageModel = require("../../DB/models/message.model");
 const HttpError = require("../../common/http-error");
 
 const createGroup = async function (name, users, admin) {
-  const groupChat = await chatModel({
+  await chatModel({
     chatName: name,
     users: users,
     isGroupChat: true,
@@ -13,7 +14,7 @@ const createGroup = async function (name, users, admin) {
   }).save();
 };
 const uploadDegree = async function (course, student, teacher) {
-  const createDegree = await new degreeModel({
+  await new degreeModel({
     teacher: teacher,
     course: course,
     student: student,
@@ -22,10 +23,11 @@ const uploadDegree = async function (course, student, teacher) {
 
 const createCourse = async (req, res, next) => {
   try {
-    const { subject, grade, teacher, progress, year, day, time } = req.body;
+    const { subject, grade, year, day, time } = req.body;
+    const teacher = req.user;
     const check = await courseModel.find({ subject, grade });
-    if (!check.length == []) {
-      return next(new HttpError("this course already existed", 400));
+    if (check.length > 0) {
+      return next(new HttpError("This course already exists!", 400));
     } else {
       // var student2 =JSON.parse(student)
       const student3 = await studentModel.find({ studentLevel: grade });
@@ -34,7 +36,7 @@ const createCourse = async (req, res, next) => {
         grade,
         teacher,
         student: student3,
-        progress,
+        progress: 0,
         year,
         day,
         time,
@@ -43,7 +45,7 @@ const createCourse = async (req, res, next) => {
         const element = student3[i];
         uploadDegree(newCourse._id, element, newCourse.teacher);
       }
-      await createGroup(subject, student3, teacher);
+      await createGroup(subject, [...student3, teacher], teacher);
       res.json({ Message: "Added Successfully" });
     }
   } catch (error) {
@@ -52,11 +54,14 @@ const createCourse = async (req, res, next) => {
 };
 
 const deleteCourse = async (req, res, next) => {
-  const { cousreId } = req.body;
-  const check = await courseModel.findById({ _id: cousreId });
+  const { courseId } = req.body;
+  const check = await courseModel.findById({ _id: courseId });
   if (check) {
     await courseModel.deleteOne({ _id: check._id });
-    res.json({ Message: "deleted Successfully" });
+    await degreeModel.deleteMany({ course: check._id });
+    await chatModel.deleteMany({ chatName: check.subject });
+    await messageModel.deleteMany({ chat: check._id });
+    res.json({ message: "Deleted Successfully" });
   } else {
     return next(new HttpError("course not found", 404));
   }
