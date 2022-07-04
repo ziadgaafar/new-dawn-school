@@ -84,8 +84,7 @@ const Grades = ({}) => {
             url: "/teacher/getAllDegree",
             headers: { Authorization: `Bearer ${token}` },
           });
-          console.log(data);
-          // setData(data);
+          setData(data);
         }
       }
     })();
