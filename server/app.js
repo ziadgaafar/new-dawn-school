@@ -41,11 +41,11 @@ app.use((req, res, next) => {
 });
 
 // //Special Error Handler Middleware
-app.use((error, req, res, next) => {
-  res
-    .status(error.code || 500)
-    .json({ message: error.message || "Something went wrong!" });
-});
+// app.use((error, req, res, next) => {
+//   res
+//     .status(error.code || 500)
+//     .json({ message: error.message || "Something went wrong!" });
+// });
 
 try {
   const port = parseInt(process.env.PORT);

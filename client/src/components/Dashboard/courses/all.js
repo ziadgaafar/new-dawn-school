@@ -228,7 +228,7 @@ const AllCourses = ({}) => {
                 <th className="fw-bold text-center">Assignment</th>
                 <th className="fw-bold text-center">Exam</th>
                 <th className="fw-bold text-center">Stream</th>
-                <th className="fw-bold text-center">Delete</th>
+                {user.role === 'teacher' && <th className="fw-bold text-center">Delete</th>}
               </tr>
             </thead>
             <tbody>
@@ -319,14 +319,14 @@ const AllCourses = ({}) => {
                       {user.role === "teacher" ? "Start Stream" : "Join Stream"}
                     </Link>
                   </td>
-                  <td className="text-center">
+                  {user.role === 'teacher' && <td className="text-center">
                     <AiFillDelete
                       color="d11a2a"
                       size="25"
                       role="button"
                       onClick={() => deleteCourseHandler(item._id)}
                     />
-                  </td>
+                  </td>}
                 </tr>
               ))}
             </tbody>
