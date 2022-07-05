@@ -23,6 +23,7 @@ const sendEmail = (email, message) => {
       html: message,
     });
   } catch (error) {
+    console.log(error)
     return next(new HttpError("server error in emails", 500));
   }
 };

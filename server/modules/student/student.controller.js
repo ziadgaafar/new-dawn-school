@@ -8,14 +8,15 @@ const teacherModel = require("../../DB/models/teacher.model");
 const chatModel = require("../../DB/models/chat.Model");
 
 const pushStudent = async function (grade, student) {
-  const courses = await courseModel.find({grade:grade})
-  if (courses.length == 0) {
-    next()
+  const courses = await courseModel.find({grade})
+  console.log({courses, grade, student})
+  if (courses.length === 0) {
+    return;
   } else {
     courses.forEach(async (element) => {
       element.student.push(student);
-      await courseModel.findByIdAndUpdate(element._id, {student: elemnt.student})
-      await chatModel.findOneAndUpdate({groupAdmin: element.teacher},{users: [...chat.users,student]})
+      await courseModel.findByIdAndUpdate(element._id, {student: element.student})
+      await chatModel.findOneAndUpdate({groupAdmin: element.teacher},{users: element.student})
       await new degreeModel({teacher:element.teacher, course:element._id, student:student}).save();
     });
   }
@@ -54,7 +55,7 @@ const studentRegister = async (req, res, next) => {
         submitQuestion,
       });
       const addStudent = await newStudent.save();
-      await pushStudent(newStudent.grade, newStudent._id)
+      await pushStudent(newStudent.studentLevel, newStudent._id)
       var token = jwt.sign({ addStudent }, process.env.TOKEN_KEY, {
         expiresIn: 420,
       });
@@ -71,7 +72,7 @@ const studentRegister = async (req, res, next) => {
   }
 };
 
-const confirmRegister = async (req, res) => {
+const confirmRegister = async (req, res, next) => {
   try {
     const { token } = req.params;
     const decoded = jwt.verify(token, process.env.TOKEN_KEY);
@@ -86,6 +87,15 @@ const confirmRegister = async (req, res) => {
         { isConfirmed: true },
         { new: true }
       );
+
+      const message = `
+          <div style="text-align:center">
+              <h1>You Have Been Accepted To New Dawn School You Can Now Login To Your Account!</h1>
+              <h2>Your password: ${updateStudent.password}</h2>
+          </div>
+      `;
+      sendEmail(updateStudent.email, message)
+
       res.redirect(process.env.CLIENT_URL);
     } else {
       return next(
@@ -93,6 +103,7 @@ const confirmRegister = async (req, res) => {
       );
     }
   } catch (error) {
+    console.log(error)
     return next(new HttpError("server error", 500));
   }
 };
@@ -142,7 +153,7 @@ const studentDegree = async (req, res, next) => {
   }
 };
 
-const getExam = async (req, res) =>{
+const getExam = async (req, res, next) =>{
   const {courseId} = req.body
   const found = await courseModel.findOne({_id:courseId})
   if (found) {

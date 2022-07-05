@@ -2,6 +2,7 @@ import React from "react";
 import "./form.css";
 import ph from "../../images/form.png";
 import { Form, Row } from "react-bootstrap";
+import {useNavigate} from 'react-router-dom'
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useHttpClient } from "../../hooks/http-hook";
@@ -11,6 +12,7 @@ const FormPage = () => {
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
   const { sendRequest } = useHttpClient();
+  const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
       studentOrParent: "student",
@@ -47,6 +49,7 @@ const FormPage = () => {
         url: "/student/register",
       });
       console.log(data);
+      navigate('/login');
     },
   });
 
