@@ -43,7 +43,7 @@ const downloadBook = async (req, res, next) => {
   const found = await bookModel.find({ _id: req.params.bookId });
   if (found) {
     let x = __dirname + "../../../" + found[0].filePath;
-    res.download(x);
+    res.download(x)
   } else {
     return next(new HttpError("book not found", 404));
   }
