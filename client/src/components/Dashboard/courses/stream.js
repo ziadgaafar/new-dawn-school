@@ -1,17 +1,17 @@
 import { useEffect, useState, useRef } from 'react';
 
-import {Peer} from "peerjs"
-import { Container } from 'react-bootstrap';
-import {useSelector} from 'react-redux' ;
+import { Peer } from "peerjs"
+import { Container, Row, Col } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
-
+import './stream.css';
 
 
 
 function Stream() {
 
   const { token, user } = useSelector((state) => state.auth);
- 
+
   const [peerId, setPeerId] = useState('');
   const [remotePeerIdValue, setRemotePeerIdValue] = useState('');
   const remoteVideoRef = useRef(null);
@@ -56,32 +56,71 @@ function Stream() {
         remoteVideoRef.current.srcObject = remoteStream;
         remoteVideoRef.current.play();
       });
-    
+
     });
   };
 
 
 
+  const [copySuccess, setCopySuccess] = useState('');
+  const textAreaRef = useRef(null);
+
+  function copyToClipboard(e) {
+    textAreaRef.current.select();
+    document.execCommand('copy');
+    e.target.focus();
+    setCopySuccess('Copied!');
+  };
 
   console.log(peerId)
   return (
-    <Container className="App">
-       {user.role === 'teacher' && <>
-        <h5>
-          Current User Id is : {peerId}
-        </h5>
-       </> }
-      {user.role === 'student' && <>
-        <input type="text" value={remotePeerIdValue} onChange={e => setRemotePeerIdValue(e.target.value)} />
-        <button onClick={() => call(remotePeerIdValue)}>Call</button>
-      </> }
-      <div> <video ref={currentUserVedioRef} /> </div>
-      <div> <video ref={remoteVideoRef} /> </div>
-      <Link to={'/dashboard/courses/all'}>
-       Close
-      </Link>
- 
-    </Container>
+    <div className='w-100 row justify-content-center p-3'>
+      <Row className=' justify-content-center '>
+        <Row className=' justify-content-center '>
+          {user.role === 'teacher' && <>
+            <Col xl={6} xs={12} className="mt-3">
+              <h5 className='row justify-content-center '>
+                Current User Id is:<input className='col-5 ml-2 id-input' ref={textAreaRef} value={peerId} />
+              </h5>
+            </Col>
+            <Col xl={3} xs={1} className="mt-2">
+
+              <button className='text-white stream-start-btn ' onClick={copyToClipboard}>Copy</button>
+              {copySuccess}
+
+            </Col>
+
+
+          </>}
+        </Row>
+
+        {user.role === 'student' && <>
+          <input className='p-2 stream-input col-4' type="text" value={remotePeerIdValue} onChange={e => setRemotePeerIdValue(e.target.value)} />
+          <button className=' ml-2 text-white stream-start-btn col-2' onClick={() => call(remotePeerIdValue)}>Call</button>
+        </>}
+      </Row>
+
+
+
+
+      <Row className=' justify-content-center mt-4'>
+        <video className='col-lg-3 col-6 stream-video<div>
+          <button onClick={copyToClipboard}>Copy</button> 
+          {copySuccess}
+        </div> bg-white m-1' ref={currentUserVedioRef} />
+        <video className='col-lg-8 col-9  stream-video bg-white m-1' ref={remoteVideoRef} />
+
+      </Row>
+      <br></br>
+      <Row className=' justify-content-center mt-4'>
+        <Link className='stream-close-btn col-2 p-1' to={'/dashboard/stream'} onClick={() => {
+           Peer.close()
+        }}>
+          Close
+        </Link>
+      </Row>
+
+    </div>
   );
 }
 

@@ -1,0 +1,35 @@
+.stream-input {
+    border-radius: 5px;
+}
+
+.stream-start-btn {
+    border-radius: 5px;
+    font-size: 20px;
+    background-color: #539cd3;
+    padding: 5px 15px;
+}
+
+.stream-start-btn:hover {
+    background-color: #68B9F8;
+
+
+}
+
+.stream-close-btn {
+    border-radius: 5px;
+    font-size: 20px;
+    border: 1px solid black;
+    text-align: center;
+    background-color: red;
+    color: white;
+}
+
+.stream-close-btn:hover { 
+    background-color: rgb(250, 71, 71);
+    color: white;
+
+}
+
+.stream-video{
+    border: 1px solid black;
+}
